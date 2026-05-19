@@ -339,11 +339,6 @@ export default function SmartOverview({ sheetData, workbook }) {
         return val.toLowerCase() === lo || name.includes(lo);
       });
     }
-    if (activeFilters._fiscal && iCol) {
-      const lo = activeFilters._fiscal.toLowerCase();
-      d = d.filter((r) => String(r[iCol]).toLowerCase().includes(lo));
-    }
-
     // Also apply global search
     if (searchText) {
       const lo = searchText.toLowerCase();
@@ -660,9 +655,17 @@ export default function SmartOverview({ sheetData, workbook }) {
                     <option value="">Desde año</option>
                     {yearsArr.map((y) => <option key={y} value={String(y)}>{Number(y) < 100 ? `20${String(y).padStart(2,'0')}` : y}</option>)}
                   </select>
+                  <select className="sel sel--compact" value={activeFilters._startMonth || ''} onChange={(e) => setFilter('_startMonth', e.target.value)}>
+                    <option value="">Desde mes</option>
+                    {months.map((m) => <option key={m.v} value={m.v}>{m.l}</option>)}
+                  </select>
                   <select className="sel sel--compact" value={activeFilters._endYear || ''} onChange={(e) => setFilter('_endYear', e.target.value)}>
                     <option value="">Hasta año</option>
                     {yearsArr.map((y) => <option key={y} value={String(y)}>{Number(y) < 100 ? `20${String(y).padStart(2,'0')}` : y}</option>)}
+                  </select>
+                  <select className="sel sel--compact" value={activeFilters._endMonth || ''} onChange={(e) => setFilter('_endMonth', e.target.value)}>
+                    <option value="">Hasta mes</option>
+                    {months.map((m) => <option key={m.v} value={m.v}>{m.l}</option>)}
                   </select>
                 </>
               )}
