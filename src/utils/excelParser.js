@@ -318,8 +318,11 @@ export const getHistogramData = (data, column, buckets = 10) => {
 
   if (values.length === 0) return null;
 
-  const min = Math.min(...values);
-  const max = Math.max(...values);
+  let min = Infinity, max = -Infinity;
+  for (const v of values) {
+    if (v < min) min = v;
+    if (v > max) max = v;
+  }
   const range = max - min || 1;
   const size = range / buckets;
 
@@ -665,7 +668,11 @@ export const exportToExcel = (data, filename = 'datos.xlsx', filters = []) => {
 
   // Auto-width columns
   const colWidths = headers.map((h) => {
-    const maxData = Math.max(...data.map((r) => String(r[h] || '').length), h.length);
+    let maxData = h.length;
+    for (const row of data) {
+      const len = String(row[h] || '').length;
+      if (len > maxData) maxData = len;
+    }
     return { wch: Math.min(maxData + 2, 50) };
   });
   ws['!cols'] = colWidths;
@@ -764,8 +771,13 @@ export const exportToCustomExcel = (data, filename, metadata = {}, filters = [])
   try {
     const years = data.map((r) => parseInt(r['Año'] || r['ANIO'])).filter((y) => !isNaN(y));
     if (years.length) {
-      const minYear = Math.min(...years) + 2000;
-      const maxYear = Math.max(...years) + 2000;
+      let minYear = Infinity, maxYear = -Infinity;
+      for (const y of years) {
+        if (y < minYear) minYear = y;
+        if (y > maxYear) maxYear = y;
+      }
+      minYear += 2000;
+      maxYear += 2000;
       timeRange = ` ENTRE NOVIEMBRE DE ${minYear} A MAYO DE ${maxYear}`;
     }
   } catch (e) {}

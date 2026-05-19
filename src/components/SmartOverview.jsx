@@ -514,8 +514,11 @@ export default function SmartOverview({ sheetData, workbook }) {
         ? (() => {
             const vals = data.map((r) => Number(r[structure?.dimensions?.year])).filter((v) => !isNaN(v));
             if (vals.length === 0) return null;
-            const min = Math.min(...vals);
-            const max = Math.max(...vals);
+            let min = Infinity, max = -Infinity;
+            for (const v of vals) {
+              if (v < min) min = v;
+              if (v > max) max = v;
+            }
             return { min: min < 100 ? 2000 + min : min, max: max < 100 ? 2000 + max : max };
           })()
         : null,
