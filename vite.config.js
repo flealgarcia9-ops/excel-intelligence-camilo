@@ -1,21 +1,21 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// https://vite.dev/config/
+// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  worker: {
-    format: 'es',
-  },
+  base: '/excel-intelligence-camilo/',
   build: {
-    target: 'es2020',
+    outDir: 'dist',
+    sourcemap: true,
+    chunkSizeWarningLimit: 600,
     rollupOptions: {
       output: {
         manualChunks: {
-          'chartjs': ['chart.js', 'react-chartjs-2'],
-          'xlsx': ['xlsx'],
-        },
-      },
-    },
-  },
+          xlsx: ['xlsx'],
+          chartjs: ['chart.js', 'react-chartjs-2'],
+        }
+      }
+    }
+  }
 })
