@@ -1,0 +1,130 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - img [ref=e7]
+      - generic [ref=e9]:
+        - heading "Excel Intelligence" [level=1] [ref=e10]
+        - paragraph [ref=e11]: Análisis de Datos — v4.0.2
+    - button "Nuevo" [ref=e276] [cursor=pointer]:
+      - img [ref=e277]
+      - text: Nuevo
+  - generic [ref=e282]:
+    - generic [ref=e283]:
+      - img [ref=e285]
+      - generic [ref=e288]:
+        - strong [ref=e289]: test_generic.csv
+        - generic [ref=e290]:
+          - generic [ref=e291]: CSV
+          - generic [ref=e292]: 0.00 MB
+          - generic [ref=e293]: 1 hoja(s)
+          - generic [ref=e294]:
+            - img [ref=e295]
+            - text: 18/5/2026
+    - generic [ref=e298]:
+      - generic [ref=e299]: "Seleccionar Hoja:"
+      - combobox [ref=e300] [cursor=pointer]:
+        - option "Sheet1 (10 filas)" [selected]
+  - generic [ref=e301]:
+    - complementary [ref=e302]:
+      - generic [ref=e304]:
+        - button "Resumen" [ref=e305] [cursor=pointer]:
+          - img [ref=e306]
+          - text: Resumen
+        - button "Gráficos" [ref=e309] [cursor=pointer]:
+          - img [ref=e310]
+          - text: Gráficos
+        - button "Tabla" [ref=e311] [cursor=pointer]:
+          - img [ref=e312]
+          - text: Tabla
+      - generic [ref=e314]:
+        - generic [ref=e315]:
+          - img [ref=e316]
+          - text: Métricas
+        - generic [ref=e320]:
+          - generic [ref=e321] [cursor=pointer]:
+            - checkbox "Ventas -20.0%" [checked] [ref=e322]
+            - generic "Ventas" [ref=e323]
+            - 'generic "Tendencia: -20.0%" [ref=e324]':
+              - img [ref=e325]
+              - text: "-20.0%"
+          - generic [ref=e328] [cursor=pointer]:
+            - checkbox "Costo" [ref=e329]
+            - generic "Costo" [ref=e330]
+      - generic [ref=e331]:
+        - generic [ref=e332]:
+          - img [ref=e333]
+          - text: Tipo de Gráfico
+        - generic [ref=e338]:
+          - button "Barras" [ref=e339] [cursor=pointer]:
+            - img [ref=e340]
+            - generic [ref=e341]: Barras
+          - button "Líneas" [ref=e342] [cursor=pointer]:
+            - img [ref=e343]
+            - generic [ref=e346]: Líneas
+          - button "Anillo" [ref=e347] [cursor=pointer]:
+            - img [ref=e348]
+            - generic [ref=e351]: Anillo
+          - button "Radar" [ref=e352] [cursor=pointer]:
+            - img [ref=e353]
+            - generic [ref=e357]: Radar
+          - button "Polar" [ref=e358] [cursor=pointer]:
+            - img [ref=e359]
+            - generic [ref=e361]: Polar
+      - generic [ref=e362]:
+        - generic [ref=e363]:
+          - img [ref=e364]
+          - text: Resumen — Ventas
+        - generic [ref=e366]:
+          - generic [ref=e367]:
+            - generic [ref=e368]: Suma
+            - generic [ref=e369]: 6.1K
+          - generic [ref=e370]:
+            - generic [ref=e371]: Promedio
+            - generic [ref=e372]: "612"
+          - generic [ref=e373]:
+            - generic [ref=e374]: Mediana
+            - generic [ref=e375]: "175"
+          - generic [ref=e376]:
+            - generic [ref=e377]: Mínimo
+            - generic [ref=e378]: "20"
+          - generic [ref=e379]:
+            - generic [ref=e380]: Máximo
+            - generic [ref=e381]: 2.0K
+          - generic [ref=e382]:
+            - generic [ref=e383]: Registros
+            - generic [ref=e384]: "10"
+          - generic [ref=e385]:
+            - generic [ref=e386]: σ Desv.
+            - generic [ref=e387]: "772.24"
+          - generic [ref=e388]:
+            - generic [ref=e389]: CV %
+            - generic [ref=e390]: 126.18%
+    - generic [ref=e391]:
+      - generic [ref=e392]:
+        - generic [ref=e393]:
+          - heading "Visualización" [level=3] [ref=e394]:
+            - img [ref=e395]
+            - text: Visualización
+          - paragraph [ref=e396]: 10 registro(s)
+        - generic [ref=e397]:
+          - generic [ref=e398]:
+            - img [ref=e399]
+            - combobox [ref=e401] [cursor=pointer]:
+              - option "Global…" [selected]
+              - option "Producto"
+              - option "Ventas"
+              - option "Costo"
+              - option "Region"
+              - option "Mes"
+            - searchbox "Buscar…" [ref=e402]
+          - button "Pantalla completa" [ref=e403] [cursor=pointer]:
+            - img [ref=e404]
+          - button "PNG" [ref=e409] [cursor=pointer]:
+            - img [ref=e410]
+            - text: PNG
+          - button "EXCEL" [ref=e413] [cursor=pointer]:
+            - img [ref=e414]
+            - text: EXCEL
+      - img [ref=e420]
+  - contentinfo [ref=e47]:
+    - paragraph [ref=e48]: Excel Intelligence Platform · Procesamiento 100% local · 2026

@@ -1,0 +1,197 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - img [ref=e7]
+      - generic [ref=e9]:
+        - heading "Excel Intelligence" [level=1] [ref=e10]
+        - paragraph [ref=e11]: Análisis de Datos — v4.1.0
+    - button "Nuevo" [ref=e61] [cursor=pointer]:
+      - img [ref=e62]
+      - text: Nuevo
+  - generic [ref=e67]:
+    - generic [ref=e68]:
+      - img [ref=e70]
+      - generic [ref=e73]:
+        - strong [ref=e74]: data.xlsx
+        - generic [ref=e75]:
+          - generic [ref=e76]: XLSX
+          - generic [ref=e77]: 13.90 MB
+          - generic [ref=e78]: 4 hoja(s)
+          - generic [ref=e79]:
+            - img [ref=e80]
+            - text: 4/4/2026
+    - generic [ref=e83]:
+      - generic [ref=e84]: "Seleccionar Hoja:"
+      - combobox [ref=e85] [cursor=pointer]:
+        - option "Original (8610 filas)"
+        - option "Consultas Específicas (8610 filas)"
+        - option "Consultas Básicas (8611 filas)" [selected]
+        - option "Unidades (70 filas)"
+  - generic [ref=e86]:
+    - complementary [ref=e87]:
+      - generic [ref=e89]:
+        - button "Resumen" [ref=e90] [cursor=pointer]:
+          - img [ref=e91]
+          - text: Resumen
+        - button "Gráficos" [ref=e94] [cursor=pointer]:
+          - img [ref=e95]
+          - text: Gráficos
+        - button "Tabla" [ref=e96] [cursor=pointer]:
+          - img [ref=e97]
+          - text: Tabla
+        - button "Correlación" [ref=e99] [cursor=pointer]:
+          - img [ref=e100]
+          - text: Correlación
+      - generic [ref=e102]:
+        - generic [ref=e103]:
+          - img [ref=e104]
+          - generic [ref=e106]: CALIDAD DE DATOS
+        - generic [ref=e109]:
+          - generic [ref=e110]: 100% completo
+          - generic [ref=e111]: 8,611 filas · 13 cols
+      - generic [ref=e497]:
+        - generic [ref=e498]:
+          - img [ref=e499]
+          - text: Métricas
+        - generic [ref=e503]:
+          - generic [ref=e504] [cursor=pointer]:
+            - checkbox "Nro Unidad -10.1%" [checked] [ref=e505]
+            - generic "Nro Unidad" [ref=e506]
+            - generic [ref=e507]:
+              - img [ref=e508]
+              - text: "-10.1%"
+          - generic [ref=e511] [cursor=pointer]:
+            - checkbox "Nro Fiscal" [ref=e512]
+            - generic "Nro Fiscal" [ref=e513]
+          - generic [ref=e514] [cursor=pointer]:
+            - checkbox "Mes" [ref=e515]
+            - generic "Mes" [ref=e516]
+          - generic [ref=e517] [cursor=pointer]:
+            - checkbox "Año" [ref=e518]
+            - generic "Año" [ref=e519]
+          - generic [ref=e520] [cursor=pointer]:
+            - checkbox "INDAGACIONES" [ref=e521]
+            - generic "INDAGACIONES" [ref=e522]
+          - generic [ref=e523] [cursor=pointer]:
+            - checkbox "INVESTIGACIONES" [ref=e524]
+            - generic "INVESTIGACIONES" [ref=e525]
+          - generic [ref=e526] [cursor=pointer]:
+            - checkbox "JUICIOS" [ref=e527]
+            - generic "JUICIOS" [ref=e528]
+          - generic [ref=e529] [cursor=pointer]:
+            - checkbox "QUERELLAS" [ref=e530]
+            - generic "QUERELLAS" [ref=e531]
+      - generic [ref=e532]:
+        - generic [ref=e533]:
+          - img [ref=e534]
+          - text: Tipo de Gráfico
+        - generic [ref=e539]:
+          - button "Barras" [ref=e540] [cursor=pointer]:
+            - img [ref=e541]
+            - generic [ref=e542]: Barras
+          - button "Líneas" [ref=e543] [cursor=pointer]:
+            - img [ref=e544]
+            - generic [ref=e547]: Líneas
+          - button "Anillo" [ref=e548] [cursor=pointer]:
+            - img [ref=e549]
+            - generic [ref=e552]: Anillo
+          - button "Radar" [ref=e553] [cursor=pointer]:
+            - img [ref=e554]
+            - generic [ref=e558]: Radar
+          - button "Polar" [ref=e559] [cursor=pointer]:
+            - img [ref=e560]
+            - generic [ref=e562]: Polar
+      - generic [ref=e563]:
+        - generic [ref=e564]:
+          - img [ref=e565]
+          - text: Agrupar por
+        - combobox [ref=e566] [cursor=pointer]:
+          - option "Sin agrupar (datos raw)"
+          - option "SECCIONAL" [selected]
+          - option "UNIDAD"
+          - option "Tipo"
+          - option "Activa"
+          - option "Nombre Fiscal"
+        - combobox [ref=e567] [cursor=pointer]:
+          - option "Suma" [selected]
+          - option "Promedio"
+          - option "Conteo"
+          - option "Máximo"
+          - option "Mínimo"
+      - generic [ref=e568]:
+        - generic [ref=e569]:
+          - img [ref=e570]
+          - text: Resumen — Nro Unidad
+        - generic [ref=e572]:
+          - generic [ref=e573]:
+            - generic [ref=e574]: Suma
+            - generic [ref=e575]: 3.40M
+          - generic [ref=e576]:
+            - generic [ref=e577]: Promedio
+            - generic [ref=e578]: "395.44"
+          - generic [ref=e579]:
+            - generic [ref=e580]: Mediana
+            - generic [ref=e581]: "307"
+          - generic [ref=e582]:
+            - generic [ref=e583]: Mínimo
+            - generic [ref=e584]: "1"
+          - generic [ref=e585]:
+            - generic [ref=e586]: Máximo
+            - generic [ref=e587]: "682"
+          - generic [ref=e588]:
+            - generic [ref=e589]: Registros
+            - generic [ref=e590]: 8.6K
+          - generic [ref=e591]:
+            - generic [ref=e592]: σ Desv.
+            - generic [ref=e593]: "176.12"
+          - generic [ref=e594]:
+            - generic [ref=e595]: CV %
+            - generic [ref=e596]: 44.54%
+    - generic [ref=e112]:
+      - generic [ref=e597]:
+        - generic [ref=e598]:
+          - heading "Visualización" [level=3] [ref=e599]:
+            - img [ref=e600]
+            - text: Visualización
+          - paragraph [ref=e601]:
+            - text: 8,611 registro(s)
+            - generic [ref=e602]: agrupado por SECCIONAL
+        - generic [ref=e603]:
+          - button "Pantalla completa" [ref=e604] [cursor=pointer]:
+            - img [ref=e605]
+          - button "PNG" [ref=e610] [cursor=pointer]:
+            - img [ref=e611]
+            - text: PNG
+          - button "CSV" [ref=e614] [cursor=pointer]:
+            - img [ref=e615]
+            - text: CSV
+      - generic [ref=e620]:
+        - img [ref=e621]
+        - searchbox "Buscar en todos los campos…" [ref=e623]
+        - generic [ref=e624]:
+          - combobox [ref=e625] [cursor=pointer]:
+            - option "Columna…"
+            - option "SECCIONAL"
+            - option "Nro Unidad"
+            - option "UNIDAD"
+            - option "Tipo"
+            - option "Activa"
+            - option "Nro Fiscal"
+            - option "Mes"
+            - option "Año" [selected]
+            - option "Nombre Fiscal"
+            - option "INDAGACIONES"
+            - option "INVESTIGACIONES"
+            - option "JUICIOS"
+            - option "QUERELLAS"
+          - combobox [ref=e626] [cursor=pointer]:
+            - option "="
+            - option ">"
+            - option "<"
+            - option "Contiene" [selected]
+          - textbox "Valor…" [active] [ref=e627]: "2015"
+          - button "Agregar filtro" [ref=e628] [cursor=pointer]:
+            - img [ref=e629]
+      - img [ref=e631]
+  - contentinfo [ref=e47]:
+    - paragraph [ref=e48]: Excel Intelligence Platform · Procesamiento 100% local · 2026

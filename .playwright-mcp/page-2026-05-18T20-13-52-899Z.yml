@@ -1,0 +1,96 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - img [ref=e7]
+      - generic [ref=e9]:
+        - heading "Excel Intelligence" [level=1] [ref=e10]
+        - paragraph [ref=e11]: Análisis de Datos — v4.0.2
+    - button "Nuevo" [ref=e276] [cursor=pointer]:
+      - img [ref=e277]
+      - text: Nuevo
+  - generic [ref=e282]:
+    - generic [ref=e283]:
+      - img [ref=e285]
+      - generic [ref=e288]:
+        - strong [ref=e289]: test_generic.csv
+        - generic [ref=e290]:
+          - generic [ref=e291]: CSV
+          - generic [ref=e292]: 0.00 MB
+          - generic [ref=e293]: 1 hoja(s)
+          - generic [ref=e294]:
+            - img [ref=e295]
+            - text: 18/5/2026
+    - generic [ref=e298]:
+      - generic [ref=e299]: "Seleccionar Hoja:"
+      - combobox [ref=e300] [cursor=pointer]:
+        - option "Sheet1 (10 filas)" [selected]
+  - generic [ref=e301]:
+    - complementary [ref=e302]:
+      - generic [ref=e304]:
+        - button "Resumen" [active] [ref=e305] [cursor=pointer]:
+          - img [ref=e306]
+          - text: Resumen
+        - button "Gráficos" [ref=e309] [cursor=pointer]:
+          - img [ref=e310]
+          - text: Gráficos
+        - button "Tabla" [ref=e311] [cursor=pointer]:
+          - img [ref=e312]
+          - text: Tabla
+    - generic [ref=e421]:
+      - generic [ref=e422]:
+        - generic [ref=e423]:
+          - img [ref=e424]
+          - heading "Resumen General" [level=3] [ref=e426]
+        - paragraph [ref=e427]: 10 filas · 5 columnas · 2 numéricas
+      - generic [ref=e428]:
+        - paragraph [ref=e429]:
+          - text: Esta hoja tiene
+          - strong [ref=e430]: "5"
+          - text: columnas y
+          - strong [ref=e431]: "10"
+          - text: filas.
+        - generic [ref=e432]:
+          - generic [ref=e433]:
+            - heading "Ventas" [level=4] [ref=e434]
+            - generic [ref=e435]:
+              - generic [ref=e436]:
+                - generic [ref=e437]: Suma
+                - generic [ref=e438]: 6.1K
+              - generic [ref=e439]:
+                - generic [ref=e440]: Promedio
+                - generic [ref=e441]: "612"
+              - generic [ref=e442]:
+                - generic [ref=e443]: Máx
+                - generic [ref=e444]: 2.0K
+              - generic [ref=e445]:
+                - generic [ref=e446]: Min
+                - generic [ref=e447]: "20"
+          - generic [ref=e448]:
+            - heading "Costo" [level=4] [ref=e449]
+            - generic [ref=e450]:
+              - generic [ref=e451]:
+                - generic [ref=e452]: Suma
+                - generic [ref=e453]: 3.3K
+              - generic [ref=e454]:
+                - generic [ref=e455]: Promedio
+                - generic [ref=e456]: "325"
+              - generic [ref=e457]:
+                - generic [ref=e458]: Máx
+                - generic [ref=e459]: 1.0K
+              - generic [ref=e460]:
+                - generic [ref=e461]: Min
+                - generic [ref=e462]: "12"
+      - generic [ref=e463]:
+        - heading "Columnas detectadas" [level=4] [ref=e464]
+        - generic [ref=e465]:
+          - generic [ref=e466]: Producto
+          - generic [ref=e467]:
+            - text: Ventas
+            - generic [ref=e468]: ●
+          - generic [ref=e469]:
+            - text: Costo
+            - generic [ref=e470]: ●
+          - generic [ref=e471]: Region
+          - generic [ref=e472]: Mes
+  - contentinfo [ref=e47]:
+    - paragraph [ref=e48]: Excel Intelligence Platform · Procesamiento 100% local · 2026

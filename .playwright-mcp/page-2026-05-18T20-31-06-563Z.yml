@@ -1,0 +1,196 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - img [ref=e7]
+      - generic [ref=e9]:
+        - heading "Excel Intelligence" [level=1] [ref=e10]
+        - paragraph [ref=e11]: Análisis de Datos — v4.1.0
+    - button "Nuevo" [ref=e60] [cursor=pointer]:
+      - img [ref=e61]
+      - text: Nuevo
+  - generic [ref=e66]:
+    - generic [ref=e67]:
+      - img [ref=e69]
+      - generic [ref=e72]:
+        - strong [ref=e73]: data.xlsx
+        - generic [ref=e74]:
+          - generic [ref=e75]: XLSX
+          - generic [ref=e76]: 13.90 MB
+          - generic [ref=e77]: 4 hoja(s)
+          - generic [ref=e78]:
+            - img [ref=e79]
+            - text: 4/4/2026
+    - generic [ref=e82]:
+      - generic [ref=e83]: "Seleccionar Hoja:"
+      - combobox [ref=e84] [cursor=pointer]:
+        - option "Original (8610 filas)" [selected]
+        - option "Consultas Específicas (8610 filas)"
+        - option "Consultas Básicas (8611 filas)"
+        - option "Unidades (70 filas)"
+  - generic [ref=e95]:
+    - complementary [ref=e96]:
+      - generic [ref=e98]:
+        - button "Resumen" [ref=e99] [cursor=pointer]:
+          - img [ref=e100]
+          - text: Resumen
+        - button "Gráficos" [ref=e103] [cursor=pointer]:
+          - img [ref=e104]
+          - text: Gráficos
+        - button "Tabla" [ref=e105] [cursor=pointer]:
+          - img [ref=e106]
+          - text: Tabla
+        - button "Correlación" [ref=e108] [cursor=pointer]:
+          - img [ref=e109]
+          - text: Correlación
+    - generic [ref=e112]:
+      - generic [ref=e113]:
+        - generic [ref=e114]:
+          - img [ref=e115]
+          - generic [ref=e117]: CALIDAD DE DATOS
+        - generic [ref=e120]:
+          - generic [ref=e121]: 100% completo
+          - generic [ref=e122]: 8,610
+      - generic [ref=e123]:
+        - generic [ref=e124]:
+          - img [ref=e125]
+          - generic [ref=e127]:
+            - generic [ref=e128]: "Desde:"
+            - generic [ref=e129]:
+              - combobox [ref=e130] [cursor=pointer]:
+                - option "Año…" [selected]
+                - option "2008"
+                - option "2009"
+                - option "2010"
+                - option "2011"
+                - option "2012"
+                - option "2013"
+                - option "2014"
+                - option "2015"
+                - option "2016"
+                - option "2017"
+              - combobox [ref=e131] [cursor=pointer]:
+                - option "Mes…" [selected]
+                - option "Enero"
+                - option "Febrero"
+                - option "Marzo"
+                - option "Abril"
+                - option "Mayo"
+                - option "Junio"
+                - option "Julio"
+                - option "Agosto"
+                - option "Septiembre"
+                - option "Octubre"
+                - option "Noviembre"
+                - option "Diciembre"
+          - generic [ref=e132]:
+            - generic [ref=e133]: "Hasta:"
+            - generic [ref=e134]:
+              - combobox [ref=e135] [cursor=pointer]:
+                - option "Año…" [selected]
+                - option "2008"
+                - option "2009"
+                - option "2010"
+                - option "2011"
+                - option "2012"
+                - option "2013"
+                - option "2014"
+                - option "2015"
+                - option "2016"
+                - option "2017"
+              - combobox [ref=e136] [cursor=pointer]:
+                - option "Mes…" [selected]
+                - option "Enero"
+                - option "Febrero"
+                - option "Marzo"
+                - option "Abril"
+                - option "Mayo"
+                - option "Junio"
+                - option "Julio"
+                - option "Agosto"
+                - option "Septiembre"
+                - option "Octubre"
+                - option "Noviembre"
+                - option "Diciembre"
+        - generic [ref=e137]:
+          - combobox [ref=e138] [cursor=pointer]:
+            - option "Todas las seccionales" [selected]
+            - option "DIRECCIÓN SECCIONAL NORTE DE SANTANDER"
+          - generic [ref=e139]:
+            - generic [ref=e140]: "Unidad:"
+            - combobox "(Todas)" [ref=e141]
+          - generic [ref=e142]:
+            - generic [ref=e143]: "Nro fiscal:"
+            - combobox [ref=e144] [cursor=pointer]:
+              - option "(Todos)" [selected]
+              - option "1"
+              - option "3"
+          - generic [ref=e145]:
+            - button "Excel" [ref=e146] [cursor=pointer]:
+              - img [ref=e147]
+              - text: Excel
+            - generic [ref=e150]: 8,610 registros · 2008—2017
+      - generic [ref=e151]:
+        - generic [ref=e152]:
+          - generic [ref=e153]:
+            - img [ref=e155]
+            - generic [ref=e156]: Indagaciones
+          - generic [ref=e157]: 368.3K
+          - generic [ref=e159]:
+            - img [ref=e160]
+            - text: +37.4%
+        - generic [ref=e163]:
+          - generic [ref=e164]:
+            - img [ref=e166]
+            - generic [ref=e171]: Investigaciones
+          - generic [ref=e172]: 31.1K
+          - generic [ref=e174]:
+            - img [ref=e175]
+            - text: +42.3%
+        - generic [ref=e178]:
+          - generic [ref=e179]:
+            - img [ref=e181]
+            - generic [ref=e184]: Juicios
+          - generic [ref=e185]: 25.9K
+          - generic [ref=e187]:
+            - img [ref=e188]
+            - text: +61.0%
+        - generic [ref=e191]:
+          - generic [ref=e192]:
+            - img [ref=e194]
+            - generic [ref=e196]: Querellas / Ley 600
+          - generic [ref=e197]: 59.8K
+          - generic [ref=e199]:
+            - img [ref=e200]
+            - text: "-33.4%"
+      - generic [ref=e203]:
+        - generic [ref=e204]: Indagaciones368.3K
+        - img [ref=e205]
+        - generic [ref=e207]: Investigaciones31.1K
+        - img [ref=e208]
+        - generic [ref=e210]: Juicios25.9K
+        - img [ref=e211]
+        - generic [ref=e213]: Querellas / Ley 60059.8K
+      - generic [ref=e214]:
+        - generic [ref=e215]:
+          - generic [ref=e216]:
+            - heading "Evolución por Año" [level=4] [ref=e217]
+            - button "Descargar PNG" [ref=e218] [cursor=pointer]:
+              - img [ref=e219]
+          - img [ref=e223]
+        - generic [ref=e224]:
+          - generic [ref=e225]:
+            - heading "Comparación por Etapa" [level=4] [ref=e226]
+            - button "Descargar PNG" [ref=e227] [cursor=pointer]:
+              - img [ref=e228]
+          - img [ref=e232]
+        - generic [ref=e233]:
+          - heading "Desglose Mensual" [level=4] [ref=e235]
+          - img [ref=e237]
+        - generic [ref=e238]:
+          - generic [ref=e239]:
+            - heading "Top Unidades por Volumen" [level=4] [ref=e240]
+            - button "Descargar PNG" [ref=e241] [cursor=pointer]:
+              - img [ref=e242]
+          - img [ref=e246]
+  - contentinfo [ref=e47]:
+    - paragraph [ref=e48]: Excel Intelligence Platform · Procesamiento 100% local · 2026
