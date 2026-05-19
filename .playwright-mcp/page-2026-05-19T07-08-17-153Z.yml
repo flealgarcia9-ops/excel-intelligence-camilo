@@ -1,0 +1,16 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - img [ref=e7]
+      - generic [ref=e9]:
+        - heading "Excel Intelligence" [level=1] [ref=e10]
+        - paragraph [ref=e11]: Análisis de Datos — v4.1.0
+  - generic [ref=e49]:
+    - img [ref=e50]
+    - heading "Analizando tu archivo" [level=3] [ref=e52]
+    - paragraph [ref=e53]: Extrayendo hojas, columnas y estadísticas…
+    - generic [ref=e55]:
+      - generic [ref=e56]: Analizando columnas…
+      - generic [ref=e57]: 80%
+  - contentinfo [ref=e47]:
+    - paragraph [ref=e48]: Excel Intelligence Platform · Procesamiento 100% local · 2026

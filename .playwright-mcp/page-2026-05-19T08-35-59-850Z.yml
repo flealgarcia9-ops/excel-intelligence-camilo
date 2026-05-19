@@ -1,0 +1,293 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - img [ref=e7]
+      - generic [ref=e9]:
+        - heading "Excel Intelligence" [level=1] [ref=e10]
+        - paragraph [ref=e11]: Análisis de Datos — v4.1.0
+    - button "Nuevo" [ref=e67] [cursor=pointer]:
+      - img [ref=e68]
+      - text: Nuevo
+  - generic [ref=e73]:
+    - generic [ref=e74]:
+      - img [ref=e76]
+      - generic [ref=e79]:
+        - strong [ref=e80]: data.xlsx
+        - generic [ref=e81]:
+          - generic [ref=e82]: XLSX
+          - generic [ref=e83]: 13.90 MB
+          - generic [ref=e84]: 4 hoja(s)
+          - generic [ref=e85]:
+            - img [ref=e86]
+            - text: 4/4/2026
+    - generic [ref=e89]:
+      - generic [ref=e90]: "Seleccionar Hoja:"
+      - combobox [ref=e91] [cursor=pointer]:
+        - option "Original (8610 filas)"
+        - option "Consultas Específicas (8610 filas)"
+        - option "Consultas Básicas (8611 filas)" [selected]
+        - option "Unidades (70 filas)"
+  - generic [ref=e92]:
+    - complementary [ref=e93]:
+      - generic [ref=e95]:
+        - button "Resumen" [ref=e96] [cursor=pointer]:
+          - img [ref=e97]
+          - text: Resumen
+        - button "Gráficos" [ref=e100] [cursor=pointer]:
+          - img [ref=e101]
+          - text: Gráficos
+        - button "Tabla" [ref=e102] [cursor=pointer]:
+          - img [ref=e103]
+          - text: Tabla
+        - button "Correlación" [ref=e105] [cursor=pointer]:
+          - img [ref=e106]
+          - text: Correlación
+        - button "Anomalías" [ref=e108] [cursor=pointer]:
+          - img [ref=e109]
+          - text: Anomalías
+      - generic [ref=e111]:
+        - generic [ref=e112]:
+          - img [ref=e113]
+          - generic [ref=e115]: CALIDAD DE DATOS
+        - generic [ref=e118]:
+          - generic [ref=e119]: 100% completo
+          - generic [ref=e120]: 8,611 filas · 13 cols
+      - generic [ref=e257]:
+        - generic [ref=e258]:
+          - img [ref=e259]
+          - text: Métricas
+        - generic [ref=e263]:
+          - generic [ref=e1032] [cursor=pointer]:
+            - checkbox "Nro Unidad +25.1%" [checked] [ref=e1090]
+            - generic "Nro Unidad" [ref=e1034]
+            - generic [ref=e1035]:
+              - img [ref=e1091]
+              - text: +25.1%
+          - generic [ref=e1039] [cursor=pointer]:
+            - checkbox "Nro Fiscal" [ref=e1040]
+            - generic "Nro Fiscal" [ref=e1041]
+          - generic [ref=e1042] [cursor=pointer]:
+            - checkbox "Mes" [ref=e1043]
+            - generic "Mes" [ref=e1044]
+          - generic [ref=e1045] [cursor=pointer]:
+            - checkbox "Año" [ref=e1046]
+            - generic "Año" [ref=e1047]
+          - generic [ref=e1048] [cursor=pointer]:
+            - checkbox "INDAGACIONES" [ref=e1049]
+            - generic "INDAGACIONES" [ref=e1050]
+          - generic [ref=e1051] [cursor=pointer]:
+            - checkbox "INVESTIGACIONES" [ref=e1052]
+            - generic "INVESTIGACIONES" [ref=e1053]
+          - generic [ref=e1054] [cursor=pointer]:
+            - checkbox "JUICIOS" [ref=e1055]
+            - generic "JUICIOS" [ref=e1056]
+          - generic [ref=e1057] [cursor=pointer]:
+            - checkbox "QUERELLAS" [ref=e1058]
+            - generic "QUERELLAS" [ref=e1059]
+      - generic [ref=e1060]:
+        - generic [ref=e1061]:
+          - img [ref=e1062]
+          - text: Resumen — Nro Unidad
+        - generic [ref=e1064]:
+          - generic [ref=e1065]:
+            - generic [ref=e1066]: Suma
+            - generic [ref=e1067]: 1.17M
+          - generic [ref=e1068]:
+            - generic [ref=e1069]: Promedio
+            - generic [ref=e1070]: "461.22"
+          - generic [ref=e1071]:
+            - generic [ref=e1072]: Mediana
+            - generic [ref=e1073]: "504"
+          - generic [ref=e1074]:
+            - generic [ref=e1075]: Mínimo
+            - generic [ref=e1076]: "1"
+          - generic [ref=e1077]:
+            - generic [ref=e1078]: Máximo
+            - generic [ref=e1079]: "682"
+          - generic [ref=e1080]:
+            - generic [ref=e1081]: Registros
+            - generic [ref=e1082]: 2.5K
+          - generic [ref=e1083]:
+            - generic [ref=e1084]: σ Desv.
+            - generic [ref=e1085]: "194.62"
+          - generic [ref=e1086]:
+            - generic [ref=e1087]: CV %
+            - generic [ref=e1088]: 42.2%
+    - generic [ref=e121]:
+      - generic [ref=e993]:
+        - generic [ref=e994]:
+          - heading [level=3]
+          - paragraph [ref=e997]:
+            - text: 2,528 registro(s)
+            - generic [ref=e1097]: filtrados
+            - generic [ref=e998]: agrupado por SECCIONAL
+        - generic [ref=e999]:
+          - button "Excel" [ref=e1010] [cursor=pointer]:
+            - img [ref=e1011]
+            - text: Excel
+          - button "CSV" [ref=e1014] [cursor=pointer]:
+            - img [ref=e1015]
+            - text: CSV
+      - generic [ref=e1019]:
+        - generic [ref=e1020]:
+          - img [ref=e1021]
+          - searchbox "Buscar en todos los campos…" [ref=e1023]
+          - generic [ref=e1024]:
+            - combobox [ref=e1025] [cursor=pointer]:
+              - option "Columna…"
+              - option "SECCIONAL"
+              - option "Nro Unidad"
+              - option "UNIDAD"
+              - option "Tipo"
+              - option "Activa"
+              - option "Nro Fiscal"
+              - option "Mes"
+              - option "Año" [selected]
+              - option "Nombre Fiscal"
+              - option "INDAGACIONES"
+              - option "INVESTIGACIONES"
+              - option "JUICIOS"
+              - option "QUERELLAS"
+            - combobox [ref=e1026] [cursor=pointer]:
+              - option "="
+              - option ">" [selected]
+              - option "<"
+              - option "Contiene"
+            - textbox "Valor…" [ref=e1027]
+            - button "Agregar filtro" [ref=e1028] [cursor=pointer]:
+              - img [ref=e1029]
+        - generic [ref=e1098]:
+          - generic [ref=e1099]:
+            - strong [ref=e1100]: Año
+            - text: ">"
+            - emphasis [ref=e1101]: "14"
+            - button "Quitar filtro" [ref=e1102] [cursor=pointer]:
+              - img [ref=e1103]
+          - button "Limpiar" [ref=e1106] [cursor=pointer]:
+            - img [ref=e1107]
+            - text: Limpiar
+      - generic [ref=e1895]:
+        - generic [ref=e1896]:
+          - heading "Anomalías Detectadas" [level=3] [ref=e1897]:
+            - img [ref=e1898]
+            - text: Anomalías Detectadas
+          - paragraph [ref=e1900]: Se encontraron valores atípicos usando el método IQR (rango intercuartílico)
+        - generic [ref=e1901]:
+          - generic [ref=e1902]:
+            - strong [ref=e1903]: Nro Fiscal
+            - generic [ref=e1904]: 50 outliers (4.23%)
+          - generic [ref=e1905]:
+            - generic [ref=e1906]: "Media: 4.9"
+            - generic [ref=e1907]: "Desv. Est.: 5.32"
+            - generic [ref=e1908]: "Q1: 1"
+            - generic [ref=e1909]: "Q3: 7"
+            - generic [ref=e1910]: "Límite inf.: -8"
+            - generic [ref=e1911]: "Límite sup.: 16"
+          - generic [ref=e1912]:
+            - 'generic "Fila 1777, z-score: 3.4" [ref=e1913]': "23"
+            - 'generic "Fila 1778, z-score: 3.4" [ref=e1914]': "23"
+            - 'generic "Fila 1779, z-score: 3.4" [ref=e1915]': "23"
+            - 'generic "Fila 1780, z-score: 3.4" [ref=e1916]': "23"
+            - 'generic "Fila 1781, z-score: 3.4" [ref=e1917]': "23"
+            - 'generic "Fila 1782, z-score: 3.4" [ref=e1918]': "23"
+            - 'generic "Fila 1783, z-score: 3.4" [ref=e1919]': "23"
+            - 'generic "Fila 1147, z-score: 3.22" [ref=e1920]': "22"
+            - 'generic "Fila 1148, z-score: 3.22" [ref=e1921]': "22"
+            - 'generic "Fila 1149, z-score: 3.22" [ref=e1922]': "22"
+            - generic [ref=e1923]: +40 más
+        - generic [ref=e1924]:
+          - generic [ref=e1925]:
+            - strong [ref=e1926]: INDAGACIONES
+            - generic [ref=e1927]: 50 outliers (2.81%)
+          - generic [ref=e1928]:
+            - generic [ref=e1929]: "Media: 479.33"
+            - generic [ref=e1930]: "Desv. Est.: 551.89"
+            - generic [ref=e1931]: "Q1: 35"
+            - generic [ref=e1932]: "Q3: 752"
+            - generic [ref=e1933]: "Límite inf.: -1.0K"
+            - generic [ref=e1934]: "Límite sup.: 1.8K"
+          - generic [ref=e1935]:
+            - 'generic "Fila 1359, z-score: 7.07" [ref=e1936]': 4.4K
+            - 'generic "Fila 1358, z-score: 6.71" [ref=e1937]': 4.2K
+            - 'generic "Fila 1357, z-score: 6.58" [ref=e1938]': 4.1K
+            - 'generic "Fila 1356, z-score: 6.27" [ref=e1939]': 3.9K
+            - 'generic "Fila 1355, z-score: 5.93" [ref=e1940]': 3.8K
+            - 'generic "Fila 1354, z-score: 5.7" [ref=e1941]': 3.6K
+            - 'generic "Fila 2073, z-score: 5.53" [ref=e1942]': 3.5K
+            - 'generic "Fila 1353, z-score: 5.27" [ref=e1943]': 3.4K
+            - 'generic "Fila 2072, z-score: 5.26" [ref=e1944]': 3.4K
+            - 'generic "Fila 2071, z-score: 5.01" [ref=e1945]': 3.2K
+            - generic [ref=e1946]: +40 más
+        - generic [ref=e1947]:
+          - generic [ref=e1948]:
+            - strong [ref=e1949]: INVESTIGACIONES
+            - generic [ref=e1950]: 50 outliers (5.14%)
+          - generic [ref=e1951]:
+            - generic [ref=e1952]: "Media: 26.24"
+            - generic [ref=e1953]: "Desv. Est.: 36.97"
+            - generic [ref=e1954]: "Q1: 0"
+            - generic [ref=e1955]: "Q3: 39"
+            - generic [ref=e1956]: "Límite inf.: -58.5"
+            - generic [ref=e1957]: "Límite sup.: 97.5"
+          - generic [ref=e1958]:
+            - 'generic "Fila 1888, z-score: 5.78" [ref=e1959]': "240"
+            - 'generic "Fila 2262, z-score: 5.48" [ref=e1960]': "229"
+            - 'generic "Fila 1887, z-score: 5.43" [ref=e1961]': "227"
+            - 'generic "Fila 1886, z-score: 5.38" [ref=e1962]': "225"
+            - 'generic "Fila 1884, z-score: 5.3" [ref=e1963]': "222"
+            - 'generic "Fila 1885, z-score: 5.24" [ref=e1964]': "220"
+            - 'generic "Fila 2261, z-score: 5.05" [ref=e1965]': "213"
+            - 'generic "Fila 2259, z-score: 4.84" [ref=e1966]': "205"
+            - 'generic "Fila 2260, z-score: 4.84" [ref=e1967]': "205"
+            - 'generic "Fila 1880, z-score: 4.75" [ref=e1968]': "202"
+            - generic [ref=e1969]: +40 más
+        - generic [ref=e1970]:
+          - generic [ref=e1971]:
+            - strong [ref=e1972]: JUICIOS
+            - generic [ref=e1973]: 50 outliers (7.28%)
+          - generic [ref=e1974]:
+            - generic [ref=e1975]: "Media: 42.82"
+            - generic [ref=e1976]: "Desv. Est.: 61.77"
+            - generic [ref=e1977]: "Q1: 0"
+            - generic [ref=e1978]: "Q3: 61"
+            - generic [ref=e1979]: "Límite inf.: -91.5"
+            - generic [ref=e1980]: "Límite sup.: 152.5"
+          - generic [ref=e1981]:
+            - 'generic "Fila 710, z-score: 5.6" [ref=e1982]': "389"
+            - 'generic "Fila 709, z-score: 5.28" [ref=e1983]': "369"
+            - 'generic "Fila 708, z-score: 5.15" [ref=e1984]': "361"
+            - 'generic "Fila 707, z-score: 4.88" [ref=e1985]': "344"
+            - 'generic "Fila 1870, z-score: 4.79" [ref=e1986]': "339"
+            - 'generic "Fila 724, z-score: 4.68" [ref=e1987]': "332"
+            - 'generic "Fila 1868, z-score: 4.65" [ref=e1988]': "330"
+            - 'generic "Fila 1869, z-score: 4.65" [ref=e1989]': "330"
+            - 'generic "Fila 721, z-score: 4.63" [ref=e1990]': "329"
+            - 'generic "Fila 722, z-score: 4.62" [ref=e1991]': "328"
+            - generic [ref=e1992]: +40 más
+        - generic [ref=e1993]:
+          - generic [ref=e1994]:
+            - strong [ref=e1995]: QUERELLAS
+            - generic [ref=e1996]: 50 outliers (21.44%)
+          - generic [ref=e1997]:
+            - generic [ref=e1998]: "Media: 33.17"
+            - generic [ref=e1999]: "Desv. Est.: 115.46"
+            - generic [ref=e2000]: "Q1: 0"
+            - generic [ref=e2001]: "Q3: 0"
+            - generic [ref=e2002]: "Límite inf.: 0"
+            - generic [ref=e2003]: "Límite sup.: 0"
+          - generic [ref=e2004]:
+            - 'generic "Fila 1058, z-score: 9.15" [ref=e2005]': 1.1K
+            - 'generic "Fila 1057, z-score: 9" [ref=e2006]': 1.1K
+            - 'generic "Fila 1056, z-score: 8.97" [ref=e2007]': 1.1K
+            - 'generic "Fila 1053, z-score: 8.87" [ref=e2008]': 1.1K
+            - 'generic "Fila 1052, z-score: 8.34" [ref=e2009]': "996"
+            - 'generic "Fila 1054, z-score: 8.12" [ref=e2010]': "971"
+            - 'generic "Fila 1051, z-score: 8.07" [ref=e2011]': "965"
+            - 'generic "Fila 1055, z-score: 7.98" [ref=e2012]': "954"
+            - 'generic "Fila 1049, z-score: 7.96" [ref=e2013]': "952"
+            - 'generic "Fila 1050, z-score: 7.86" [ref=e2014]': "941"
+            - generic [ref=e2015]: +40 más
+  - button "Toggle theme" [active] [ref=e47] [cursor=pointer]:
+    - img [ref=e2016]
+  - contentinfo [ref=e54]:
+    - paragraph [ref=e55]: Excel Intelligence Platform · Procesamiento 100% local · 2026

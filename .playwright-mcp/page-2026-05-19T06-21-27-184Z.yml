@@ -1,0 +1,215 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - img [ref=e7]
+      - generic [ref=e9]:
+        - heading "Excel Intelligence" [level=1] [ref=e10]
+        - paragraph [ref=e11]: Análisis de Datos — v4.1.0
+    - button "Nuevo" [ref=e61] [cursor=pointer]:
+      - img [ref=e62]
+      - text: Nuevo
+  - generic [ref=e67]:
+    - generic [ref=e68]:
+      - img [ref=e70]
+      - generic [ref=e73]:
+        - strong [ref=e74]: data.xlsx
+        - generic [ref=e75]:
+          - generic [ref=e76]: XLSX
+          - generic [ref=e77]: 13.90 MB
+          - generic [ref=e78]: 4 hoja(s)
+          - generic [ref=e79]:
+            - img [ref=e80]
+            - text: 4/4/2026
+    - generic [ref=e83]:
+      - generic [ref=e84]: "Seleccionar Hoja:"
+      - combobox [ref=e85] [cursor=pointer]:
+        - option "Original (8610 filas)"
+        - option "Consultas Específicas (8610 filas)"
+        - option "Consultas Básicas (8611 filas)" [selected]
+        - option "Unidades (70 filas)"
+  - generic [ref=e86]:
+    - complementary [ref=e87]:
+      - generic [ref=e89]:
+        - button "Resumen" [active] [ref=e90] [cursor=pointer]:
+          - img [ref=e91]
+          - text: Resumen
+        - button "Gráficos" [ref=e94] [cursor=pointer]:
+          - img [ref=e95]
+          - text: Gráficos
+        - button "Tabla" [ref=e96] [cursor=pointer]:
+          - img [ref=e97]
+          - text: Tabla
+        - button "Correlación" [ref=e99] [cursor=pointer]:
+          - img [ref=e100]
+          - text: Correlación
+      - generic [ref=e102]:
+        - generic [ref=e103]:
+          - img [ref=e104]
+          - generic [ref=e106]: CALIDAD DE DATOS
+        - generic [ref=e109]:
+          - generic [ref=e110]: 100% completo
+          - generic [ref=e111]: 8,611 filas · 13 cols
+    - generic [ref=e383]:
+      - generic [ref=e384]:
+        - generic [ref=e385]:
+          - img [ref=e386]
+          - generic [ref=e388]: CALIDAD DE DATOS
+        - generic [ref=e391]:
+          - generic [ref=e392]: 100% completo
+          - generic [ref=e393]: 8,611
+      - generic [ref=e394]:
+        - generic [ref=e395]:
+          - img [ref=e396]
+          - generic [ref=e398]:
+            - generic [ref=e399]: "Desde:"
+            - generic [ref=e400]:
+              - combobox [ref=e401] [cursor=pointer]:
+                - option "Año…" [selected]
+                - option "2008"
+                - option "2009"
+                - option "2010"
+                - option "2011"
+                - option "2012"
+                - option "2013"
+                - option "2014"
+                - option "2015"
+                - option "2016"
+                - option "2017"
+              - combobox [ref=e402] [cursor=pointer]:
+                - option "Mes…" [selected]
+                - option "Enero"
+                - option "Febrero"
+                - option "Marzo"
+                - option "Abril"
+                - option "Mayo"
+                - option "Junio"
+                - option "Julio"
+                - option "Agosto"
+                - option "Septiembre"
+                - option "Octubre"
+                - option "Noviembre"
+                - option "Diciembre"
+          - generic [ref=e403]:
+            - generic [ref=e404]: "Hasta:"
+            - generic [ref=e405]:
+              - combobox [ref=e406] [cursor=pointer]:
+                - option "Año…" [selected]
+                - option "2008"
+                - option "2009"
+                - option "2010"
+                - option "2011"
+                - option "2012"
+                - option "2013"
+                - option "2014"
+                - option "2015"
+                - option "2016"
+                - option "2017"
+              - combobox [ref=e407] [cursor=pointer]:
+                - option "Mes…" [selected]
+                - option "Enero"
+                - option "Febrero"
+                - option "Marzo"
+                - option "Abril"
+                - option "Mayo"
+                - option "Junio"
+                - option "Julio"
+                - option "Agosto"
+                - option "Septiembre"
+                - option "Octubre"
+                - option "Noviembre"
+                - option "Diciembre"
+        - generic [ref=e408]:
+          - combobox [ref=e409] [cursor=pointer]:
+            - option "Todas las seccionales" [selected]
+            - option "DIRECCIÓN SECCIONAL NORTE DE SANTANDER"
+          - generic [ref=e410]:
+            - generic [ref=e411]: "Unidad:"
+            - combobox "(Todas)" [ref=e412]
+          - generic [ref=e413]:
+            - generic [ref=e414]: "Nro fiscal:"
+            - combobox [ref=e415] [cursor=pointer]:
+              - option "(Todos)" [selected]
+              - option "1"
+              - option "3"
+          - generic [ref=e416]:
+            - button "Excel" [ref=e417] [cursor=pointer]:
+              - img [ref=e418]
+              - text: Excel
+            - generic [ref=e421]: 8,611 registros · 2000—2017
+      - generic [ref=e422]:
+        - paragraph [ref=e423]: Esta hoja tiene 13 columnas y 8,611 filas.
+        - generic [ref=e424]:
+          - generic [ref=e425]:
+            - heading "Nro Unidad" [level=4] [ref=e426]
+            - generic [ref=e427]:
+              - generic [ref=e428]:
+                - generic [ref=e429]: Suma
+                - generic [ref=e430]: 3.40M
+              - generic [ref=e431]:
+                - generic [ref=e432]: Promedio
+                - generic [ref=e433]: "395"
+              - generic [ref=e434]:
+                - generic [ref=e435]: Máx
+                - generic [ref=e436]: "682"
+          - generic [ref=e437]:
+            - heading "Nro Fiscal" [level=4] [ref=e438]
+            - generic [ref=e439]:
+              - generic [ref=e440]:
+                - generic [ref=e441]: Suma
+                - generic [ref=e442]: 37.5K
+              - generic [ref=e443]:
+                - generic [ref=e444]: Promedio
+                - generic [ref=e445]: "4"
+              - generic [ref=e446]:
+                - generic [ref=e447]: Máx
+                - generic [ref=e448]: "23"
+          - generic [ref=e449]:
+            - heading "Mes" [level=4] [ref=e450]
+            - generic [ref=e451]:
+              - generic [ref=e452]:
+                - generic [ref=e453]: Suma
+                - generic [ref=e454]: 55.0K
+              - generic [ref=e455]:
+                - generic [ref=e456]: Promedio
+                - generic [ref=e457]: "6"
+              - generic [ref=e458]:
+                - generic [ref=e459]: Máx
+                - generic [ref=e460]: "12"
+          - generic [ref=e461]:
+            - heading "Año" [level=4] [ref=e462]
+            - generic [ref=e463]:
+              - generic [ref=e464]:
+                - generic [ref=e465]: Suma
+                - generic [ref=e466]: 108.8K
+              - generic [ref=e467]:
+                - generic [ref=e468]: Promedio
+                - generic [ref=e469]: "13"
+              - generic [ref=e470]:
+                - generic [ref=e471]: Máx
+                - generic [ref=e472]: "17"
+          - generic [ref=e473]:
+            - heading "INDAGACIONES" [level=4] [ref=e474]
+            - generic [ref=e475]:
+              - generic [ref=e476]:
+                - generic [ref=e477]: Suma
+                - generic [ref=e478]: 2.81M
+              - generic [ref=e479]:
+                - generic [ref=e480]: Promedio
+                - generic [ref=e481]: "327"
+              - generic [ref=e482]:
+                - generic [ref=e483]: Máx
+                - generic [ref=e484]: 4.4K
+          - generic [ref=e485]:
+            - heading "INVESTIGACIONES" [level=4] [ref=e486]
+            - generic [ref=e487]:
+              - generic [ref=e488]:
+                - generic [ref=e489]: Suma
+                - generic [ref=e490]: 141.0K
+              - generic [ref=e491]:
+                - generic [ref=e492]: Promedio
+                - generic [ref=e493]: "16"
+              - generic [ref=e494]:
+                - generic [ref=e495]: Máx
+                - generic [ref=e496]: "240"
+  - contentinfo [ref=e47]:
+    - paragraph [ref=e48]: Excel Intelligence Platform · Procesamiento 100% local · 2026

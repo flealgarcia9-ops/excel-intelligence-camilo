@@ -1,0 +1,191 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - img [ref=e7]
+      - generic [ref=e9]:
+        - heading "Excel Intelligence" [level=1] [ref=e10]
+        - paragraph [ref=e11]: Análisis de Datos — v4.1.0
+    - button "Nuevo" [ref=e57] [cursor=pointer]:
+      - img [ref=e58]
+      - text: Nuevo
+  - generic [ref=e63]:
+    - generic [ref=e64]:
+      - img [ref=e66]
+      - generic [ref=e69]:
+        - strong [ref=e70]: 5 Actuaciones y Salidas 2020-2023.xlsx
+        - generic [ref=e71]:
+          - generic [ref=e72]: XLSX
+          - generic [ref=e73]: 30.36 MB
+          - generic [ref=e74]: 1 hoja(s)
+          - generic [ref=e75]:
+            - img [ref=e76]
+            - text: 14/5/2026
+    - generic [ref=e79]:
+      - generic [ref=e80]: "Seleccionar Hoja:"
+      - combobox [ref=e81] [cursor=pointer]:
+        - option "casosAsignadosSeccional22042026 (442875 filas)" [selected]
+  - generic [ref=e82]:
+    - complementary [ref=e83]:
+      - generic [ref=e85]:
+        - button "Resumen" [ref=e86] [cursor=pointer]:
+          - img [ref=e87]
+          - text: Resumen
+        - button "Gráficos" [ref=e90] [cursor=pointer]:
+          - img [ref=e91]
+          - text: Gráficos
+        - button "Tabla" [ref=e92] [cursor=pointer]:
+          - img [ref=e93]
+          - text: Tabla
+        - button "Correlación" [ref=e95] [cursor=pointer]:
+          - img [ref=e96]
+          - text: Correlación
+        - button "Anomalías" [ref=e98] [cursor=pointer]:
+          - img [ref=e99]
+          - text: Anomalías
+      - generic [ref=e101]:
+        - generic [ref=e102]:
+          - img [ref=e103]
+          - generic [ref=e105]: CALIDAD DE DATOS
+        - generic [ref=e108]:
+          - generic [ref=e109]: 94% completo
+          - generic [ref=e110]: 442,875 filas · 13 cols
+      - generic [ref=e111]:
+        - generic [ref=e112]:
+          - img [ref=e113]
+          - text: Métricas
+        - generic [ref=e117]:
+          - generic [ref=e118] [cursor=pointer]:
+            - checkbox "Año +0.1%" [checked] [ref=e119]
+            - generic "Año" [ref=e120]
+            - generic [ref=e121]:
+              - img [ref=e122]
+              - text: +0.1%
+          - generic [ref=e123] [cursor=pointer]:
+            - checkbox "Mes" [ref=e124]
+            - generic "Mes" [ref=e125]
+          - generic [ref=e126] [cursor=pointer]:
+            - checkbox "Número de indicados afectados por cada actuación" [ref=e127]
+            - generic "Número de indicados afectados por cada actuación" [ref=e128]
+      - generic [ref=e129]:
+        - generic [ref=e130]:
+          - img [ref=e131]
+          - text: Tipo de Gráfico
+        - generic [ref=e136]:
+          - button "Barras" [ref=e137] [cursor=pointer]:
+            - img [ref=e138]
+            - generic [ref=e139]: Barras
+          - button "Líneas" [ref=e140] [cursor=pointer]:
+            - img [ref=e141]
+            - generic [ref=e144]: Líneas
+          - button "Anillo" [ref=e145] [cursor=pointer]:
+            - img [ref=e146]
+            - generic [ref=e149]: Anillo
+          - button "Radar" [ref=e150] [cursor=pointer]:
+            - img [ref=e151]
+            - generic [ref=e155]: Radar
+          - button "Polar" [ref=e156] [cursor=pointer]:
+            - img [ref=e157]
+            - generic [ref=e159]: Polar
+      - generic [ref=e160]:
+        - generic [ref=e161]:
+          - img [ref=e162]
+          - text: Agrupar por
+        - combobox [ref=e163] [cursor=pointer]:
+          - option "Sin agrupar (datos raw)"
+          - option "Número Noticia" [selected]
+          - option "Nombre de la Unidad que realizo la actuación"
+          - option "Nombre del Despacho que realizo la actuación"
+          - option "Delito referente del caso"
+          - option "Caracterización del delito referente del caso"
+          - option "Etapa del caso"
+          - option "Estado del caso"
+          - option "Nombre de la actuación"
+          - option "Fecha de la actuación"
+          - option "Fecha registro de la actuación"
+        - combobox [ref=e164] [cursor=pointer]:
+          - option "Suma" [selected]
+          - option "Promedio"
+          - option "Conteo"
+          - option "Máximo"
+          - option "Mínimo"
+      - generic [ref=e165]:
+        - generic [ref=e166]:
+          - img [ref=e167]
+          - text: Resumen — Año
+        - generic [ref=e169]:
+          - generic [ref=e170]:
+            - generic [ref=e171]: Suma
+            - generic [ref=e172]: 895.33M
+          - generic [ref=e173]:
+            - generic [ref=e174]: Promedio
+            - generic [ref=e175]: 2.0K
+          - generic [ref=e176]:
+            - generic [ref=e177]: Mediana
+            - generic [ref=e178]: 2.0K
+          - generic [ref=e179]:
+            - generic [ref=e180]: Mínimo
+            - generic [ref=e181]: 2.0K
+          - generic [ref=e182]:
+            - generic [ref=e183]: Máximo
+            - generic [ref=e184]: 2.0K
+          - generic [ref=e185]:
+            - generic [ref=e186]: Registros
+            - generic [ref=e187]: 442.9K
+          - generic [ref=e188]:
+            - generic [ref=e189]: σ Desv.
+            - generic [ref=e190]: "1.11"
+          - generic [ref=e191]:
+            - generic [ref=e192]: CV %
+            - generic [ref=e193]: 0.05%
+    - generic [ref=e194]:
+      - generic [ref=e195]:
+        - generic [ref=e196]:
+          - heading "Visualización" [level=3] [ref=e197]:
+            - img [ref=e198]
+            - text: Visualización
+          - paragraph [ref=e199]:
+            - text: 442,875 registro(s)
+            - generic [ref=e200]: agrupado por Número Noticia
+        - generic [ref=e201]:
+          - button "Pantalla completa" [ref=e202] [cursor=pointer]:
+            - img [ref=e203]
+          - button "PNG" [ref=e208] [cursor=pointer]:
+            - img [ref=e209]
+            - text: PNG
+          - button "Excel" [ref=e212] [cursor=pointer]:
+            - img [ref=e213]
+            - text: Excel
+          - button "CSV" [ref=e216] [cursor=pointer]:
+            - img [ref=e217]
+            - text: CSV
+      - generic [ref=e222]:
+        - img [ref=e223]
+        - searchbox "Buscar en todos los campos…" [ref=e225]
+        - generic [ref=e226]:
+          - combobox [ref=e227] [cursor=pointer]:
+            - option "Columna…" [selected]
+            - option "Número Noticia"
+            - option "Nombre de la Unidad que realizo la actuación"
+            - option "Nombre del Despacho que realizo la actuación"
+            - option "Delito referente del caso"
+            - option "Caracterización del delito referente del caso"
+            - option "Etapa del caso"
+            - option "Estado del caso"
+            - option "Nombre de la actuación"
+            - option "Fecha de la actuación"
+            - option "Año"
+            - option "Mes"
+            - option "Fecha registro de la actuación"
+            - option "Número de indicados afectados por cada actuación"
+          - combobox [ref=e228] [cursor=pointer]:
+            - option "Contiene" [selected]
+            - option "Igual a"
+            - option "Empieza con"
+          - textbox "Valor…" [ref=e229]
+          - button "Agregar filtro" [ref=e230] [cursor=pointer]:
+            - img [ref=e231]
+      - img [ref=e233]
+  - button "Toggle theme" [ref=e47] [cursor=pointer]:
+    - img [ref=e48]
+  - contentinfo [ref=e54]:
+    - paragraph [ref=e55]: Excel Intelligence Platform · Procesamiento 100% local · 2026

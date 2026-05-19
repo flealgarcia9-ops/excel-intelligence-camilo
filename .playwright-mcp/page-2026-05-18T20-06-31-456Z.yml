@@ -1,0 +1,38 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - img [ref=e7]
+      - generic [ref=e9]:
+        - heading "Excel Intelligence" [level=1] [ref=e10]
+        - paragraph [ref=e11]: Análisis de Datos — v4.0.2
+  - generic [ref=e12]:
+    - button "Zona de carga de archivos" [ref=e13] [cursor=pointer]:
+      - img [ref=e15]
+      - heading "Arrastra tu archivo aquí" [level=2] [ref=e18]
+      - paragraph [ref=e19]:
+        - text: Soporte para
+        - strong [ref=e20]: .xlsx
+        - text: ","
+        - strong [ref=e21]: .xls
+        - text: "y"
+        - strong [ref=e22]: .csv
+        - text: — hasta 100 MB
+      - button "Seleccionar archivo" [ref=e23]:
+        - img [ref=e24]
+        - text: Seleccionar archivo
+      - paragraph [ref=e27]: Ctrl + O
+    - generic [ref=e28]:
+      - generic [ref=e29]:
+        - img [ref=e31]
+        - heading "100% Privado" [level=3] [ref=e33]
+        - paragraph [ref=e34]: Todo el procesamiento ocurre localmente en tu navegador. Ningún dato sale de tu equipo.
+      - generic [ref=e35]:
+        - img [ref=e37]
+        - heading "Análisis Instantáneo" [level=3] [ref=e39]
+        - paragraph [ref=e40]: Estadísticas, gráficos y tablas generadas al instante con análisis inteligente.
+      - generic [ref=e41]:
+        - img [ref=e43]
+        - heading "Visualización Pro" [level=3] [ref=e45]
+        - paragraph [ref=e46]: 5 tipos de gráficos, filtros dinámicos, exportación PNG/CSV y correlaciones.
+  - contentinfo [ref=e47]:
+    - paragraph [ref=e48]: Excel Intelligence Platform · Procesamiento 100% local · 2026
