@@ -142,10 +142,30 @@ export default function SmartOverview({ sheetData, workbook }) {
   const filteredData = useMemo(() => {
     if (!sheetData?.length) return [];
     let d = sheetData;
+    const { year: yCol, month: mCol } = structure?.dimensions || {};
+
+    // Apply date range filters (works for both Fiscalia and generic data)
+    if (yCol && (activeFilters._startYear || activeFilters._endYear)) {
+      d = d.filter((r) => {
+        const y = Number(r[yCol]);
+        const m = (mCol && r[mCol] != null) ? Number(r[mCol]) || 1 : 1;
+        if (activeFilters._startYear) {
+          const sy = Number(activeFilters._startYear);
+          const sm = activeFilters._startMonth ? Number(activeFilters._startMonth) : 1;
+          if (y < sy || (y === sy && m < sm)) return false;
+        }
+        if (activeFilters._endYear) {
+          const ey = Number(activeFilters._endYear);
+          const em = activeFilters._endMonth ? Number(activeFilters._endMonth) : 12;
+          if (y > ey || (y === ey && m > em)) return false;
+        }
+        return true;
+      });
+    }
 
     // Apply dynamic column filters
     for (const [col, val] of Object.entries(activeFilters)) {
-      if (!val || val === '') continue;
+      if (!val || val === '' || col.startsWith('_')) continue;
       const lo = String(val).toLowerCase();
       d = d.filter((r) => {
         const cell = r[col];
@@ -163,7 +183,7 @@ export default function SmartOverview({ sheetData, workbook }) {
     }
 
     return d;
-  }, [sheetData, activeFilters, searchText]);
+  }, [sheetData, activeFilters, searchText, structure]);
 
   /* ── Detect filterable columns ── */
   const filterableCols = useMemo(() => {
@@ -646,36 +666,34 @@ export default function SmartOverview({ sheetData, workbook }) {
             />
           </div>
 
-          {/* Fiscalia-specific filters */}
-          {isFiscalia && (
+          {/* Date range filters - always show when year dimension detected */}
+          {yearsArr.length > 0 && (
             <>
-              {yearsArr.length > 0 && (
-                <>
-                  <select className="sel sel--compact" value={activeFilters._startYear || ''} onChange={(e) => setFilter('_startYear', e.target.value)}>
-                    <option value="">Desde año</option>
-                    {yearsArr.map((y) => <option key={y} value={String(y)}>{Number(y) < 100 ? `20${String(y).padStart(2,'0')}` : y}</option>)}
-                  </select>
-                  <select className="sel sel--compact" value={activeFilters._startMonth || ''} onChange={(e) => setFilter('_startMonth', e.target.value)}>
-                    <option value="">Desde mes</option>
-                    {months.map((m) => <option key={m.v} value={m.v}>{m.l}</option>)}
-                  </select>
-                  <select className="sel sel--compact" value={activeFilters._endYear || ''} onChange={(e) => setFilter('_endYear', e.target.value)}>
-                    <option value="">Hasta año</option>
-                    {yearsArr.map((y) => <option key={y} value={String(y)}>{Number(y) < 100 ? `20${String(y).padStart(2,'0')}` : y}</option>)}
-                  </select>
-                  <select className="sel sel--compact" value={activeFilters._endMonth || ''} onChange={(e) => setFilter('_endMonth', e.target.value)}>
-                    <option value="">Hasta mes</option>
-                    {months.map((m) => <option key={m.v} value={m.v}>{m.l}</option>)}
-                  </select>
-                </>
-              )}
-              {regionsArr.length > 0 && (
-                <select className="sel sel--compact" value={activeFilters._region || ''} onChange={(e) => setFilter('_region', e.target.value)}>
-                  <option value="">Todas las seccionales</option>
-                  {regionsArr.map((r) => <option key={r} value={String(r)}>{r}</option>)}
-                </select>
-              )}
+              <select className="sel sel--compact" value={activeFilters._startYear || ''} onChange={(e) => setFilter('_startYear', e.target.value)}>
+                <option value="">Desde año</option>
+                {yearsArr.map((y) => <option key={y} value={String(y)}>{Number(y) < 100 ? `20${String(y).padStart(2,'0')}` : y}</option>)}
+              </select>
+              <select className="sel sel--compact" value={activeFilters._startMonth || ''} onChange={(e) => setFilter('_startMonth', e.target.value)}>
+                <option value="">Desde mes</option>
+                {months.map((m) => <option key={m.v} value={m.v}>{m.l}</option>)}
+              </select>
+              <select className="sel sel--compact" value={activeFilters._endYear || ''} onChange={(e) => setFilter('_endYear', e.target.value)}>
+                <option value="">Hasta año</option>
+                {yearsArr.map((y) => <option key={y} value={String(y)}>{Number(y) < 100 ? `20${String(y).padStart(2,'0')}` : y}</option>)}
+              </select>
+              <select className="sel sel--compact" value={activeFilters._endMonth || ''} onChange={(e) => setFilter('_endMonth', e.target.value)}>
+                <option value="">Hasta mes</option>
+                {months.map((m) => <option key={m.v} value={m.v}>{m.l}</option>)}
+              </select>
             </>
+          )}
+
+          {/* Fiscalia-specific filters */}
+          {isFiscalia && regionsArr.length > 0 && (
+            <select className="sel sel--compact" value={activeFilters._region || ''} onChange={(e) => setFilter('_region', e.target.value)}>
+              <option value="">Todas las seccionales</option>
+              {regionsArr.map((r) => <option key={r} value={String(r)}>{r}</option>)}
+            </select>
           )}
 
           {/* Generic column filters */}
