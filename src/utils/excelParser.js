@@ -224,9 +224,28 @@ export const getColumnStats = (data, column) => {
   for (let i = 0; i < count; i++) sum += values[i];
   const mean = sum / count;
 
-  const sorted = [...values].sort((a, b) => a - b);
-  const min = sorted[0];
-  const max = sorted[count - 1];
+  // Use iterative min/max to avoid stack overflow with large arrays
+  let min = values[0], max = values[0];
+  for (let i = 1; i < count; i++) {
+    if (values[i] < min) min = values[i];
+    if (values[i] > max) max = values[i];
+  }
+  
+  // Use counting sort for integers or iterative approach for floats
+  // For very large arrays, use quickselect-like approach or sample
+  let sorted;
+  if (count > 50000) {
+    // For huge arrays, use a sampled sort to get approximate percentiles
+    const sampleSize = Math.min(count, 50000);
+    const step = Math.ceil(count / sampleSize);
+    const sample = [];
+    for (let i = 0; i < count; i += step) {
+      sample.push(values[i]);
+    }
+    sorted = sample.sort((a, b) => a - b);
+  } else {
+    sorted = [...values].sort((a, b) => a - b);
+  }
 
   const mid = Math.floor(count / 2);
   const median = count % 2 !== 0 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
@@ -396,8 +415,16 @@ export const aggregateByDimension = (data, dimCol, metricCols, aggFn = 'sum') =>
       if (aggFn === 'sum') return vals.reduce((a, b) => a + b, 0);
       if (aggFn === 'avg') return vals.reduce((a, b) => a + b, 0) / vals.length;
       if (aggFn === 'count') return vals.length;
-      if (aggFn === 'max') return Math.max(...vals);
-      if (aggFn === 'min') return Math.min(...vals);
+      if (aggFn === 'max') {
+        let m = -Infinity;
+        for (const v of vals) if (v > m) m = v;
+        return m;
+      }
+      if (aggFn === 'min') {
+        let m = Infinity;
+        for (const v of vals) if (v < m) m = v;
+        return m;
+      }
       return vals.reduce((a, b) => a + b, 0);
     });
   }
