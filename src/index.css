@@ -2151,3 +2151,113 @@ body::after  { background: var(--purple); bottom: -250px; right: -200px; animati
     height: 36px;
   }
 }
+
+/* ── Query View ──────────────────────────────────── */
+.query-view {
+  animation: fadeIn 0.3s ease;
+}
+
+.query-view .panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 1rem;
+}
+
+.query-view input[type="text"] {
+  background: var(--bg-2);
+  border: 1px solid var(--border-2);
+  border-radius: var(--r-sm);
+  color: var(--text);
+  padding: 0.6rem 0.8rem;
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  width: 100%;
+  transition: border-color var(--ease);
+}
+
+.query-view input[type="text"]:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.query-view .btn--sm {
+  padding: 0.35rem 0.7rem;
+  font-size: 0.75rem;
+}
+
+.query-view .badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--r-xs);
+  font-size: 0.75rem;
+  background: var(--bg-3);
+  border: 1px solid var(--border);
+  color: var(--text-2);
+  transition: all var(--ease);
+}
+
+.query-view .badge:hover {
+  background: var(--surface-hover);
+  border-color: var(--border-2);
+}
+
+.query-view .badge--dim {
+  background: var(--bg-2);
+  color: var(--text-dim);
+}
+
+/* Result table in query view */
+.query-view .tbl-wrap {
+  border-radius: var(--r-sm);
+  overflow: hidden;
+}
+
+.query-view .tbl {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+}
+
+.query-view .tbl th {
+  background: var(--bg-3);
+  color: var(--text-2);
+  font-weight: 600;
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+.query-view .tbl td {
+  padding: 0.4rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-2);
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.query-view .tbl tr:hover td {
+  background: var(--surface-hover);
+}
+
+/* Aggregate result */
+.query-view .aggregate-result {
+  text-align: center;
+  padding: 2rem;
+}
+
+.query-view .aggregate-result h2 {
+  font-size: 2.5rem;
+  color: var(--accent);
+  margin: 0 0 0.5rem;
+  font-weight: 700;
+}
+
+.query-view .aggregate-result p {
+  color: var(--text-dim);
+  font-size: 0.9rem;
+}

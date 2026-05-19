@@ -15,9 +15,10 @@ import {
   ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight,
   Maximize2, Minimize2, Activity, TrendingUp, TrendingDown, Minus,
   Grid3X3, Info, Sparkles, SlidersHorizontal, Trash2, Plus,
-  FileSpreadsheet, AlertCircle, Moon, Sun,
+  FileSpreadsheet, AlertCircle, Moon, Sun, Database, Terminal,
 } from 'lucide-react';
 import SmartOverview from './SmartOverview';
+import QueryView from './QueryView';
 
 ChartJS.register(
   CategoryScale, LinearScale, BarElement, PointElement, LineElement,
@@ -169,7 +170,7 @@ function FilterBuilder({ headers, onAdd, numericCols }) {
 export default function AnalysisDashboard({ sheetData, workbook }) {
   const [cols, setCols] = useState([]);
   const [chart, setChart] = useState('bar');
-  const [view, setView] = useState('chart');
+  const [view, setView] = useState('overview');
   const [search, setSearch] = useState('');
   const [filters, setFilters] = useState([]);
   const [page, setPage] = useState(0);
@@ -190,8 +191,8 @@ export default function AnalysisDashboard({ sheetData, workbook }) {
     setCols(numCols.length ? [numCols[0]] : []);
     setSearch(''); setFilters([]); setPage(0); setSortKey(null);
     setGroupBy(labelCols[0] || '');
-    const hasFiscalia = headers.some((h) => /^(II|III|IV|V)_/.test(h));
-    setView(hasFiscalia ? 'overview' : 'chart');
+    // Always start with overview (Resumen) view
+    setView('overview');
   }, [sheetData, numCols, headers, labelCols]);
 
   useEffect(() => { setPage(0); }, [search, filters, sortKey, sortDir]);
@@ -405,6 +406,7 @@ export default function AnalysisDashboard({ sheetData, workbook }) {
   const isCorr = view === 'correlation';
   const isOverview = view === 'overview';
   const isAnomalies = view === 'anomalies';
+  const isQuery = view === 'query';
   const hasActiveFilters = search || filters.length > 0;
 
   /* ── Anomalies ── */
@@ -437,19 +439,22 @@ export default function AnalysisDashboard({ sheetData, workbook }) {
         {/* View toggle */}
         <div className="panel" style={{ padding: '0.4rem' }}>
           <div className="vtoggle">
-            <button className={`vtoggle__btn${isOverview ? ' vtoggle__btn--active' : ''}`} onClick={() => setView('overview')}>
+            <button className={`vtoggle__btn${isOverview ? ' vtoggle__btn--active' : ''}`} onClick={() => setView('overview')} title="Resumen general con KPIs y filtros">
               <Sparkles size={14} /> Resumen
             </button>
-            <button className={`vtoggle__btn${view === 'chart' ? ' vtoggle__btn--active' : ''}`} onClick={() => setView('chart')}>
+            <button className={`vtoggle__btn${view === 'chart' ? ' vtoggle__btn--active' : ''}`} onClick={() => setView('chart')} title="Gráficos interactivos">
               <BarChart2 size={14} /> Gráficos
             </button>
-            <button className={`vtoggle__btn${view === 'table' ? ' vtoggle__btn--active' : ''}`} onClick={() => setView('table')}>
+            <button className={`vtoggle__btn${view === 'table' ? ' vtoggle__btn--active' : ''}`} onClick={() => setView('table')} title="Tabla de datos con paginación">
               <Table size={14} /> Tabla
             </button>
-            <button className={`vtoggle__btn${isCorr ? ' vtoggle__btn--active' : ''}`} onClick={() => setView('correlation')}>
+            <button className={`vtoggle__btn${view === 'query' ? ' vtoggle__btn--active' : ''}`} onClick={() => setView('query')} title="Consulta SQL-like">
+              <Terminal size={14} /> Query
+            </button>
+            <button className={`vtoggle__btn${isCorr ? ' vtoggle__btn--active' : ''}`} onClick={() => setView('correlation')} title="Matriz de correlación">
               <Grid3X3 size={14} /> Correlación
             </button>
-            <button className={`vtoggle__btn${view === 'anomalies' ? ' vtoggle__btn--active' : ''}`} onClick={() => setView('anomalies')}>
+            <button className={`vtoggle__btn${view === 'anomalies' ? ' vtoggle__btn--active' : ''}`} onClick={() => setView('anomalies')} title="Detección de anomalías">
               <AlertCircle size={14} /> Anomalías
             </button>
           </div>
@@ -713,6 +718,9 @@ export default function AnalysisDashboard({ sheetData, workbook }) {
             )}
           </>
         )}
+
+        {/* QUERY */}
+        {isQuery && <QueryView sheetData={sheetData} />}
 
         {/* ANOMALIES */}
         {isAnomalies && (
