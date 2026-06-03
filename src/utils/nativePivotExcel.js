@@ -53,15 +53,16 @@ export const inferNativePivotFields = (data, structure = {}) => {
   const monthField = structure?.dimensions?.month || findFirstHeader(headers, [/^mes$/i, /month/i]);
 
   // Detectar estructura típica de actuaciones (año + mes + nombre de actuación)
-  // En este caso usar COUNT del nombre de actuación en vez de SUM de campo numérico
+  // En este caso usar SUM de un campo sintético de conteo para evitar problemas con Excel
+  // cuando el campo de valor también está en las filas
   const hasActionYearMonth = actionField && yearField && monthField && /nombre.*actuaci[oó]n/i.test(actionField);
   if (hasActionYearMonth) {
     return {
-      headers,
+      headers: [...headers, '_Conteo'],
       rowFields: [yearField, actionField],
       columnField: monthField,
-      valueField: actionField,
-      aggFn: 'count',
+      valueField: '_Conteo',
+      aggFn: 'sum',
     };
   }
 
@@ -248,16 +249,23 @@ export const createNativePivotWorkbook = async (data, structure = {}) => {
   const fields = inferNativePivotFields(data, structure);
 
   // Convertir valores numéricos-string a números reales para que XLSX los escriba como números
-  const sourceData = data.map((row) => Object.fromEntries(fields.headers.map((header) => {
-    const val = row[header];
-    if (val === null || val === undefined || val === '') return [header, ''];
-    const num = Number(String(val).replace(',', '.'));
-    return [header, Number.isFinite(num) ? num : val];
-  })));
+  // Añadir campo sintético de conteo (1 por fila) para evitar problemas de Excel con COUNT de campos de texto
+  const sourceData = data.map((row) => {
+    const record = Object.fromEntries(fields.headers.filter((h) => h !== '_Conteo').map((header) => {
+      const val = row[header];
+      if (val === null || val === undefined || val === '') return [header, ''];
+      const num = Number(String(val).replace(',', '.'));
+      return [header, Number.isFinite(num) ? num : val];
+    }));
+    if (fields.headers.includes('_Conteo')) {
+      record._Conteo = 1;
+    }
+    return record;
+  });
   const sourceWs = XLSX.utils.json_to_sheet(sourceData, { header: fields.headers });
 
-  // Hoja de tabla dinámica: mínima, Excel la renderiza desde el XML nativo
-  const pivotWs = XLSX.utils.aoa_to_sheet([['Tabla dinámica']]);
+  // Hoja de tabla dinámica: vacía, Excel la renderiza desde el XML nativo
+  const pivotWs = XLSX.utils.aoa_to_sheet([]);
 
   const wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, pivotWs, 'Tabla dinámica');
