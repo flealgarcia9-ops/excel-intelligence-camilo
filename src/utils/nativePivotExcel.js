@@ -170,7 +170,7 @@ const makePivotTableXml = (data, fields) => {
     if (isValue) attrs += ' dataField="1"';
     if ((isRow || isCol) && !isValue) attrs += ' defaultSubtotal="0"';
 
-    if (isRow || isCol || !isValue) {
+    if ((isRow || isCol) && !isValue) {
       return `<pivotField ${attrs}>${makeItemsXml(uniqueCount)}</pivotField>`;
     }
     return `<pivotField ${attrs}/>`;
@@ -183,9 +183,7 @@ const makePivotTableXml = (data, fields) => {
   const locationRef = XLSX.utils.encode_range({ s: { r: 2, c: 0 }, e: { r: rows, c: Math.max(columns - 1, 1) } });
 
   const subtotal = fields.aggFn === 'sum' ? 'sum' : 'count';
-  const dataFieldName = `${fields.aggFn === 'sum' ? 'Suma' : 'Cuenta'} de ${fields.valueField}`;
-
-  return `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<pivotTableDefinition xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" name="PivotTable1" cacheId="1" dataOnRows="0" applyNumberFormats="0" applyBorderFormats="0" applyFontFormats="0" applyPatternFormats="0" applyAlignmentFormats="0" applyWidthHeightFormats="0" dataCaption="Valores" grandTotalCaption="Total general" showDrill="1" useAutoFormatting="1" itemPrintTitles="1" indent="0" outline="1" outlineData="1" compact="1" compactData="1"><location ref="${locationRef}" firstHeaderRow="1" firstDataRow="2" firstDataCol="1"/><pivotFields count="${fields.headers.length}">${pivotFields}</pivotFields>${rowFields}${colFields}<dataFields count="1"><dataField name="${xmlEscape(dataFieldName)}" fld="${valueIndex}" subtotal="${subtotal}"/></dataFields><pivotTableStyleInfo name="PivotStyleMedium9" showRowHeaders="1" showColHeaders="1" showRowStripes="1" showColStripes="0" showLastColumn="1"/></pivotTableDefinition>`;
+  return `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<pivotTableDefinition xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" name="PivotTable1" cacheId="1" dataOnRows="0" applyNumberFormats="0" applyBorderFormats="0" applyFontFormats="0" applyPatternFormats="0" applyAlignmentFormats="0" applyWidthHeightFormats="0" dataCaption="Valores" grandTotalCaption="Total general" showDrill="1" useAutoFormatting="1" itemPrintTitles="1" indent="0" outline="1" outlineData="1" compact="1" compactData="1"><location ref="${locationRef}" firstHeaderRow="1" firstDataRow="2" firstDataCol="1"/><pivotFields count="${fields.headers.length}">${pivotFields}</pivotFields>${rowFields}${colFields}<dataFields count="1"><dataField fld="${valueIndex}" subtotal="${subtotal}"/></dataFields><pivotTableStyleInfo name="PivotStyleMedium9" showRowHeaders="1" showColHeaders="1" showRowStripes="1" showColStripes="0" showLastColumn="1"/></pivotTableDefinition>`;
 };
 
 const appendOverride = (xml, partName, contentType) => {

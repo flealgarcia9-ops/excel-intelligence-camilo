@@ -28,8 +28,8 @@ describe('createNativePivotWorkbook', () => {
     expect(workbookXml).toContain('<pivotCaches>');
     expect(workbookXml).toContain('state="hidden"');
     expect(sheetXml).toContain('pivotTableDefinitions');
-    expect(pivotXml).toContain('Suma de _Conteo');
     expect(pivotXml).toContain('subtotal="sum"');
+    expect(pivotXml).toContain('fld="4"');
     expect(pivotXml).toContain('<rowFields count="2">');
     expect(pivotXml).toContain('<colFields count="1">');
   });
