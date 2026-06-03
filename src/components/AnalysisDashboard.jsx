@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import SmartOverview from './SmartOverview';
 import QueryView from './QueryView';
+import PivotTableView from './PivotTableView';
 
 ChartJS.register(
   CategoryScale, LinearScale, BarElement, PointElement, LineElement,
@@ -53,6 +54,12 @@ const AGG_OPTIONS = [
   { key: 'max', label: 'Máximo' },
   { key: 'min', label: 'Mínimo' },
 ];
+
+const truncateLabel = (s, max = 28) => {
+  if (!s) return '';
+  const str = String(s);
+  return str.length > max ? str.slice(0, max) + '…' : str;
+};
 
 const fmt = (n) => {
   if (n == null || isNaN(n)) return '—';
@@ -181,9 +188,9 @@ export default function AnalysisDashboard({ sheetData, workbook }) {
   const [groupBy, setGroupBy] = useState('');
   const chartRef = useRef(null);
 
-  const numCols = useMemo(() => getNumericColumns(sheetData), [sheetData]);
-  const labelCols = useMemo(() => getLabelColumns(sheetData), [sheetData]);
-  const headers = useMemo(() => sheetData?.length ? Object.keys(sheetData[0]) : [], [sheetData]);
+  const numCols = useMemo(() => getNumericColumns(sheetData).filter((k) => k && !/^Columna_\d+$/i.test(k) && k.trim() !== ''), [sheetData]);
+  const labelCols = useMemo(() => getLabelColumns(sheetData).filter((k) => k && !/^Columna_\d+$/i.test(k) && k.trim() !== ''), [sheetData]);
+  const headers = useMemo(() => sheetData?.length ? Object.keys(sheetData[0]).filter((k) => k && !/^Columna_\d+$/i.test(k) && k.trim() !== '') : [], [sheetData]);
   const quality = useMemo(() => getDataQuality(sheetData), [sheetData]);
 
   /* ── Reset on data change ── */
@@ -293,7 +300,7 @@ export default function AnalysisDashboard({ sheetData, workbook }) {
     if (groupBy && labelCols.includes(groupBy) && cols.length > 0) {
       const agg = aggregateByDimension(rows, groupBy, cols, aggFn);
       if (agg && agg.labels.length > 0) {
-        const labels = agg.labels.slice(0, MAX_CHART_POINTS);
+        const labels = agg.labels.slice(0, MAX_CHART_POINTS).map((l) => truncateLabel(l));
         return {
           labels,
           datasets: cols.map((c, i) => ({
@@ -315,18 +322,19 @@ export default function AnalysisDashboard({ sheetData, workbook }) {
     });
 
     const lk = labelCols.find((k) => k && rows[0][k] != null);
-    const labels = chartRows.map((r, i) => (lk && r[lk] != null ? String(r[lk]) : `#${i + 1}`));
+    const labels = chartRows.map((r, i) => truncateLabel(lk && r[lk] != null ? String(r[lk]) : `#${i + 1}`));
 
     if (CIRCULAR.has(chart)) {
+      const labelsRaw = chartRows.map((r, i) => (lk && r[lk] != null ? String(r[lk]) : `#${i + 1}`));
       const vals = chartRows.map((r) => Number(r[primary]) || 0);
       if (vals.length > MAX_SLICES) {
-        const pairs = labels.map((l, i) => ({ l, v: vals[i] })).sort((a, b) => b.v - a.v);
+        const pairs = labelsRaw.map((l, i) => ({ l: truncateLabel(l), v: vals[i] })).sort((a, b) => b.v - a.v);
         const top = pairs.slice(0, MAX_SLICES);
         const rest = pairs.slice(MAX_SLICES).reduce((s, x) => s + x.v, 0);
         if (rest > 0) top.push({ l: 'Otros', v: rest });
         return { labels: top.map((x) => x.l), datasets: [{ data: top.map((x) => x.v), backgroundColor: PALETTE, borderColor: BORDERS, borderWidth: 1 }] };
       }
-      return { labels, datasets: [{ data: vals, backgroundColor: PALETTE, borderColor: BORDERS, borderWidth: 1 }] };
+      return { labels: labelsRaw.map(truncateLabel), datasets: [{ data: vals, backgroundColor: PALETTE, borderColor: BORDERS, borderWidth: 1 }] };
     }
 
     return {
@@ -450,6 +458,9 @@ export default function AnalysisDashboard({ sheetData, workbook }) {
             </button>
             <button className={`vtoggle__btn${view === 'query' ? ' vtoggle__btn--active' : ''}`} onClick={() => setView('query')} title="Consulta SQL-like">
               <Terminal size={14} /> Query
+            </button>
+            <button className={`vtoggle__btn${view === 'pivot' ? ' vtoggle__btn--active' : ''}`} onClick={() => setView('pivot')} title="Tabla dinámica (pivot)">
+              <LayoutGrid size={14} /> Dinámica
             </button>
             <button className={`vtoggle__btn${isCorr ? ' vtoggle__btn--active' : ''}`} onClick={() => setView('correlation')} title="Matriz de correlación">
               <Grid3X3 size={14} /> Correlación
@@ -721,6 +732,9 @@ export default function AnalysisDashboard({ sheetData, workbook }) {
 
         {/* QUERY */}
         {isQuery && <QueryView sheetData={sheetData} />}
+
+        {/* PIVOT TABLE */}
+        {view === 'pivot' && <PivotTableView sheetData={rows} />}
 
         {/* ANOMALIES */}
         {isAnomalies && (

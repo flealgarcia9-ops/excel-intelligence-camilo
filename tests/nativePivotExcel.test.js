@@ -5,12 +5,12 @@ import { createNativePivotWorkbook } from '../src/utils/nativePivotExcel';
 describe('createNativePivotWorkbook', () => {
   it('injects native Excel pivot table and cache parts', async () => {
     const data = [
-      { 'Año': 2020, 'Mes': 1, 'Nombre de la actuación': 'Actuación A', 'Etapa del caso': 'Activa' },
-      { 'Año': 2020, 'Mes': 2, 'Nombre de la actuación': 'Actuación B', 'Etapa del caso': 'Activa' },
-      { 'Año': 2021, 'Mes': 1, 'Nombre de la actuación': 'Actuación A', 'Etapa del caso': 'Cerrada' },
+      { 'Año': 2020, 'Mes': 1, 'Nombre de la actuación': 'Actuación A', 'Número de indicados afectados por cada actuación': 2 },
+      { 'Año': 2020, 'Mes': 2, 'Nombre de la actuación': 'Actuación B', 'Número de indicados afectados por cada actuación': 3 },
+      { 'Año': 2021, 'Mes': 1, 'Nombre de la actuación': 'Actuación A', 'Número de indicados afectados por cada actuación': 4 },
     ];
     const structure = {
-      headers: ['Año', 'Mes', 'Nombre de la actuación', 'Etapa del caso'],
+      headers: ['Año', 'Mes', 'Nombre de la actuación', 'Número de indicados afectados por cada actuación'],
       dimensions: { year: 'Año', month: 'Mes' },
     };
 
@@ -28,7 +28,8 @@ describe('createNativePivotWorkbook', () => {
     expect(workbookXml).toContain('<pivotCaches>');
     expect(workbookXml).toContain('state="hidden"');
     expect(sheetXml).toContain('pivotTableDefinitions');
-    expect(pivotXml).toContain('Cuenta de Nombre de la actuación');
+    expect(pivotXml).toContain('Suma de Número de indicados afectados por cada actuación');
+    expect(pivotXml).toContain('subtotal="sum"');
     expect(pivotXml).toContain('<rowFields count="2">');
     expect(pivotXml).toContain('<colFields count="1">');
   });

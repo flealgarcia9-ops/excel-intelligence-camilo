@@ -52,13 +52,16 @@ export const inferNativePivotFields = (data, structure = {}) => {
   const yearField = structure?.dimensions?.year || findFirstHeader(headers, [/^año$/i, /^anio$/i, /year/i]);
   const monthField = structure?.dimensions?.month || findFirstHeader(headers, [/^mes$/i, /month/i]);
 
-  const valueField = actionField || findFirstHeader(numericHeaders, [
+  const numericValueField = findFirstHeader(numericHeaders, [
+    /n[uú]mero.*indicados?.*afectados?/i,
     /indicados?.*afectados?/i,
     /afectados?/i,
     /n[uú]mero/i,
     /cantidad/i,
     /total/i,
-  ]) || numericHeaders[0] || headers[0];
+  ]);
+  const valueField = numericValueField || actionField || numericHeaders[0] || headers[0];
+  const aggFn = numericHeaders.includes(valueField) ? 'sum' : 'count';
 
   const rowFields = [yearField, actionField].filter(Boolean).filter((field, index, arr) => arr.indexOf(field) === index);
   const columnField = monthField && !rowFields.includes(monthField) ? monthField : null;
@@ -68,7 +71,7 @@ export const inferNativePivotFields = (data, structure = {}) => {
     rowFields: rowFields.length ? rowFields : [headers[0]],
     columnField,
     valueField,
-    aggFn: 'count',
+    aggFn,
   };
 };
 
@@ -76,7 +79,7 @@ const buildVisiblePivotAoA = (data, fields) => {
   const pivot = buildPivotTable(data, fields.rowFields, fields.columnField, fields.valueField, fields.aggFn);
   if (!pivot) return [['Tabla dinámica']];
 
-  const valueLabel = `Cuenta de ${fields.valueField}`;
+  const valueLabel = `${fields.aggFn === 'sum' ? 'Suma' : 'Cuenta'} de ${fields.valueField}`;
   const header = fields.columnField
     ? [valueLabel, ...pivot.colLabels.map(String), 'Total general']
     : [valueLabel, 'Total general'];
@@ -155,7 +158,10 @@ const makePivotTableXml = (data, fields) => {
   const rows = Math.min(getUniqueValues(data, fields.rowFields[0]).length + 6, Math.max(data.length + 5, 20));
   const locationRef = XLSX.utils.encode_range({ s: { r: 2, c: 0 }, e: { r: rows, c: Math.max(columns - 1, 1) } });
 
-  return `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<pivotTableDefinition xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" name="PivotTable1" cacheId="1" dataOnRows="0" applyNumberFormats="0" applyBorderFormats="0" applyFontFormats="0" applyPatternFormats="0" applyAlignmentFormats="0" applyWidthHeightFormats="0" dataCaption="Valores" grandTotalCaption="Total general" showDrill="1" useAutoFormatting="1" itemPrintTitles="1" indent="0" outline="1" outlineData="1" compact="1" compactData="1"><location ref="${locationRef}" firstHeaderRow="1" firstDataRow="2" firstDataCol="1"/><pivotFields count="${fields.headers.length}">${pivotFields}</pivotFields>${rowFields}${colFields}<dataFields count="1"><dataField name="Cuenta de ${xmlEscape(fields.valueField)}" fld="${valueIndex}" subtotal="count"/></dataFields><pivotTableStyleInfo name="PivotStyleMedium9" showRowHeaders="1" showColHeaders="1" showRowStripes="1" showColStripes="0" showLastColumn="1"/></pivotTableDefinition>`;
+  const subtotal = fields.aggFn === 'sum' ? 'sum' : 'count';
+  const dataFieldName = `${fields.aggFn === 'sum' ? 'Suma' : 'Cuenta'} de ${fields.valueField}`;
+
+  return `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<pivotTableDefinition xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" name="PivotTable1" cacheId="1" dataOnRows="0" applyNumberFormats="0" applyBorderFormats="0" applyFontFormats="0" applyPatternFormats="0" applyAlignmentFormats="0" applyWidthHeightFormats="0" dataCaption="Valores" grandTotalCaption="Total general" showDrill="1" useAutoFormatting="1" itemPrintTitles="1" indent="0" outline="1" outlineData="1" compact="1" compactData="1"><location ref="${locationRef}" firstHeaderRow="1" firstDataRow="2" firstDataCol="1"/><pivotFields count="${fields.headers.length}">${pivotFields}</pivotFields>${rowFields}${colFields}<dataFields count="1"><dataField name="${xmlEscape(dataFieldName)}" fld="${valueIndex}" subtotal="${subtotal}"/></dataFields><pivotTableStyleInfo name="PivotStyleMedium9" showRowHeaders="1" showColHeaders="1" showRowStripes="1" showColStripes="0" showLastColumn="1"/></pivotTableDefinition>`;
 };
 
 const appendOverride = (xml, partName, contentType) => {
