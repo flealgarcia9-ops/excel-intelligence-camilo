@@ -159,10 +159,20 @@ const makePivotTableXml = (data, fields) => {
 
   const pivotFields = fields.headers.map((header, index) => {
     const uniqueCount = getUniqueValues(data, header).length;
-    if (rowIndexes.includes(index)) return `<pivotField axis="axisRow" compact="0" showAll="0" defaultSubtotal="0">${makeItemsXml(uniqueCount)}</pivotField>`;
-    if (colIndexes.includes(index)) return `<pivotField axis="axisCol" compact="0" showAll="0" defaultSubtotal="0">${makeItemsXml(uniqueCount)}</pivotField>`;
-    if (index === valueIndex) return '<pivotField dataField="1" compact="0" showAll="0"/>';
-    return `<pivotField compact="0" showAll="0">${makeItemsXml(uniqueCount)}</pivotField>`;
+    const isRow = rowIndexes.includes(index);
+    const isCol = colIndexes.includes(index);
+    const isValue = index === valueIndex;
+
+    let attrs = 'compact="0" showAll="0"';
+    if (isRow) attrs += ' axis="axisRow"';
+    if (isCol) attrs += ' axis="axisCol"';
+    if (isValue) attrs += ' dataField="1"';
+    if ((isRow || isCol) && !isValue) attrs += ' defaultSubtotal="0"';
+
+    if (isRow || isCol || !isValue) {
+      return `<pivotField ${attrs}>${makeItemsXml(uniqueCount)}</pivotField>`;
+    }
+    return `<pivotField ${attrs}/>`;
   }).join('');
 
   const rowFields = rowIndexes.length ? `<rowFields count="${rowIndexes.length}">${rowIndexes.map((index) => `<field x="${index}"/>`).join('')}</rowFields>` : '';
