@@ -127,9 +127,17 @@ const makeCacheRecordsXml = (data, headers) => {
     header,
     new Map(getUniqueValues(data, header).map((value, index) => [String(value), index])),
   ]));
+  const numericHeaders = new Set(headers.filter((header) => getUniqueValues(data, header).every(isUsableNumber)));
 
   const rows = data.map((row) => {
-    const cells = headers.map((header) => `<x v="${indexes[header].get(String(row[header] ?? '(vacío)')) ?? 0}"/>`).join('');
+    const cells = headers.map((header) => {
+      const raw = row[header] ?? '(vacío)';
+      if (numericHeaders.has(header)) {
+        const num = Number(String(raw).replace(',', '.'));
+        return `<n v="${xmlEscape(Number.isFinite(num) ? num : 0)}"/>`;
+      }
+      return `<x v="${indexes[header].get(String(raw)) ?? 0}"/>`;
+    }).join('');
     return `<r>${cells}</r>`;
   }).join('');
 
