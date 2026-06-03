@@ -113,7 +113,7 @@ const makeCacheFieldXml = (data, header, valueField) => {
   const isValueField = header === valueField;
 
   if (isValueField && numeric) {
-    return `<cacheField name="${xmlEscape(header)}" numFmtId="0"><sharedItems containsSemiMixedTypes="0" containsString="0" containsNumber="1" containsInteger="1" count="${values.length}">${values.map((value) => `<n v="${xmlEscape(Number(String(value).replace(',', '.')))}"/>`).join('')}</sharedItems></cacheField>`;
+    return `<cacheField name="${xmlEscape(header)}" numFmtId="0"><sharedItems containsSemiMixedTypes="0" containsString="0" containsNumber="1" containsInteger="1" count="0"/></cacheField>`;
   }
 
   const items = values.map((value) => numeric
