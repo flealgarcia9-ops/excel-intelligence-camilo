@@ -107,9 +107,15 @@ const buildVisiblePivotAoA = (data, fields) => {
   ];
 };
 
-const makeCacheFieldXml = (data, header) => {
+const makeCacheFieldXml = (data, header, valueField) => {
   const values = getUniqueValues(data, header);
   const numeric = values.length > 0 && values.every(isUsableNumber);
+  const isValueField = header === valueField;
+
+  if (isValueField && numeric) {
+    return `<cacheField name="${xmlEscape(header)}" numFmtId="0"><sharedItems containsSemiMixedTypes="0" containsString="0" containsNumber="1" containsInteger="1" count="${values.length}">${values.map((value) => `<n v="${xmlEscape(Number(String(value).replace(',', '.')))}"/>`).join('')}</sharedItems></cacheField>`;
+  }
+
   const items = values.map((value) => numeric
     ? `<n v="${xmlEscape(Number(String(value).replace(',', '.')))}"/>`
     : `<s v="${xmlEscape(value)}"/>`
@@ -122,17 +128,17 @@ const makeCacheFieldXml = (data, header) => {
   return `<cacheField name="${xmlEscape(header)}" numFmtId="0"><sharedItems${attrs}>${items}</sharedItems></cacheField>`;
 };
 
-const makeCacheRecordsXml = (data, headers) => {
+const makeCacheRecordsXml = (data, headers, valueField) => {
   const indexes = Object.fromEntries(headers.map((header) => [
     header,
     new Map(getUniqueValues(data, header).map((value, index) => [String(value), index])),
   ]));
-  const numericHeaders = new Set(headers.filter((header) => getUniqueValues(data, header).every(isUsableNumber)));
+  const valueHeader = valueField;
 
   const rows = data.map((row) => {
     const cells = headers.map((header) => {
       const raw = row[header] ?? '(vacío)';
-      if (numericHeaders.has(header)) {
+      if (header === valueHeader && isUsableNumber(raw)) {
         const num = Number(String(raw).replace(',', '.'));
         return `<n v="${xmlEscape(Number.isFinite(num) ? num : 0)}"/>`;
       }
@@ -205,9 +211,9 @@ const injectNativePivotParts = async (xlsxArray, data, fields) => {
   workbookRels = appendRelationship(workbookRels, 'rIdPivotCache1', 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/pivotCacheDefinition', 'pivotCache/pivotCacheDefinition1.xml');
   zip.file('xl/_rels/workbook.xml.rels', workbookRels);
 
-  const cacheFields = fields.headers.map((header) => makeCacheFieldXml(data, header)).join('');
+  const cacheFields = fields.headers.map((header) => makeCacheFieldXml(data, header, fields.valueField)).join('');
   zip.file('xl/pivotCache/pivotCacheDefinition1.xml', `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<pivotCacheDefinition xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" r:id="rId1" refreshOnLoad="1" recordCount="${data.length}" createdVersion="6"><cacheSource type="worksheet"><worksheetSource ref="${sourceRef}" sheet="Datos"/></cacheSource><cacheFields count="${fields.headers.length}">${cacheFields}</cacheFields></pivotCacheDefinition>`);
-  zip.file('xl/pivotCache/pivotCacheRecords1.xml', makeCacheRecordsXml(data, fields.headers));
+  zip.file('xl/pivotCache/pivotCacheRecords1.xml', makeCacheRecordsXml(data, fields.headers, fields.valueField));
   zip.file('xl/pivotCache/_rels/pivotCacheDefinition1.xml.rels', '<?xml version="1.0" encoding="UTF-8"?>\n<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/pivotCacheRecords" Target="pivotCacheRecords1.xml"/></Relationships>');
   zip.file('xl/pivotTables/pivotTable1.xml', makePivotTableXml(data, fields));
   zip.file('xl/pivotTables/_rels/pivotTable1.xml.rels', '<?xml version="1.0" encoding="UTF-8"?>\n<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/pivotCacheDefinition" Target="../pivotCache/pivotCacheDefinition1.xml"/></Relationships>');
