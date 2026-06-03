@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from 'vitest';
+import { beforeEach, describe, it, expect, vi } from 'vitest';
 import { exportToCustomExcel, exportToExcel, detectOutliers, detectAnomalies } from '../src/utils/excelParser';
 import * as XLSX from 'xlsx';
 
@@ -8,12 +8,17 @@ vi.mock('xlsx', () => ({
   default: {},
   utils: {
     aoa_to_sheet: vi.fn(() => ({})),
+    encode_range: vi.fn(() => 'A1:D4'),
     json_to_sheet: vi.fn(() => ({})),
     book_new: vi.fn(() => ({})),
     book_append_sheet: vi.fn(),
   },
   writeFile: vi.fn(),
 }));
+
+beforeEach(() => {
+  vi.clearAllMocks();
+});
 
 describe('exportToCustomExcel', () => {
   it('generates fixed 27-column layout and calls writeFile', () => {
@@ -57,7 +62,8 @@ describe('exportToExcel', () => {
 
     exportToExcel(data, 'generic.xlsx', filters);
     expect(XLSX.utils.json_to_sheet).toHaveBeenCalled();
-    expect(XLSX.utils.book_append_sheet).toHaveBeenCalledTimes(4); // Datos, Filtros, Resumen + mock from previous test
+    expect(XLSX.utils.book_append_sheet).toHaveBeenCalledTimes(3); // Tabla Dinámica, Filtros, Resumen
+    expect(XLSX.utils.book_append_sheet).toHaveBeenNthCalledWith(1, expect.any(Object), expect.any(Object), 'Tabla Dinámica');
     expect(XLSX.writeFile).toHaveBeenCalledWith(expect.any(Object), 'generic.xlsx');
   });
 });

@@ -436,8 +436,95 @@ export const aggregateByDimension = (data, dimCol, metricCols, aggFn = 'sum') =>
 };
 
 /**
- * Top N values for a dimension/metric pair.
+ * Construye una tabla dinámica bidimensional (pivot/crosstab).
+ * rowField: columna para las filas, colField: columna para las columnas (opcional),
+ * valueField: columna numérica a agregar, aggFn: sum|avg|count|max|min
  */
+/**
+ * Construye una tabla dinámica bidimensional (pivot/crosstab).
+ * rowFields: array de columnas para las filas, colField: columna para las columnas (opcional),
+ * valueField: columna a agregar, aggFn: sum|avg|count|max|min
+ * Si aggFn es 'count' se cuenta el número de registros, ignorando si valueField es numérico.
+ */
+export const buildPivotTable = (data, rowFields, colField, valueField, aggFn = 'sum') => {
+  if (!data?.length || !rowFields?.length || !valueField) return null;
+  const rFields = Array.isArray(rowFields) ? rowFields : [rowFields];
+
+  const rowGroups = {};
+  const colSet = new Set();
+
+  for (const row of data) {
+    const rowParts = rFields.map((f) => (row[f] != null ? String(row[f]) : '(vacío)'));
+    const rowKey = rowParts.join(' | ');
+    const colKey = colField ? (row[colField] != null ? String(row[colField]) : '(vacío)') : '__total__';
+
+    colSet.add(colKey);
+    if (!rowGroups[rowKey]) rowGroups[rowKey] = {};
+    if (!rowGroups[rowKey][colKey]) rowGroups[rowKey][colKey] = [];
+    rowGroups[rowKey][colKey].push(row);
+  }
+
+  const rowLabels = Object.keys(rowGroups).sort((a, b) => {
+    const aParts = a.split(' | ');
+    const bParts = b.split(' | ');
+    for (let i = 0; i < Math.min(aParts.length, bParts.length); i++) {
+      const na = parseFloat(aParts[i]), nb = parseFloat(bParts[i]);
+      if (!isNaN(na) && !isNaN(nb) && na !== nb) return na - nb;
+      const cmp = aParts[i].localeCompare(bParts[i]);
+      if (cmp !== 0) return cmp;
+    }
+    return aParts.length - bParts.length;
+  });
+
+  const colLabels = [...colSet].sort((a, b) => {
+    if (a === '__total__') return 1;
+    if (b === '__total__') return -1;
+    const na = parseFloat(a), nb = parseFloat(b);
+    if (!isNaN(na) && !isNaN(nb)) return na - nb;
+    return a.localeCompare(b);
+  });
+
+  const matrix = {};
+  const rowTotals = {};
+  const colTotals = {};
+
+  for (const col of colLabels) colTotals[col] = 0;
+
+  for (const rLabel of rowLabels) {
+    matrix[rLabel] = {};
+    let rowSum = 0;
+    for (const cLabel of colLabels) {
+      const rows = rowGroups[rLabel][cLabel] || [];
+      let val = 0;
+      if (aggFn === 'count') {
+        val = rows.length;
+      } else {
+        const vals = rows.map((r) => parseFloat(r[valueField])).filter((v) => !isNaN(v) && isFinite(v));
+        if (vals.length > 0) {
+          if (aggFn === 'sum') val = vals.reduce((a, b) => a + b, 0);
+          else if (aggFn === 'avg') val = vals.reduce((a, b) => a + b, 0) / vals.length;
+          else if (aggFn === 'max') {
+            let m = -Infinity;
+            for (const v of vals) if (v > m) m = v;
+            val = m === -Infinity ? 0 : m;
+          } else if (aggFn === 'min') {
+            let m = Infinity;
+            for (const v of vals) if (v < m) m = v;
+            val = m === Infinity ? 0 : m;
+          }
+        }
+      }
+      matrix[rLabel][cLabel] = val;
+      rowSum += val;
+      colTotals[cLabel] += val;
+    }
+    rowTotals[rLabel] = rowSum;
+  }
+
+  const grandTotal = Object.values(rowTotals).reduce((a, b) => a + b, 0);
+
+  return { rowLabels, colLabels, matrix, rowTotals, colTotals, grandTotal, rowFields: rFields };
+};
 export const getTopN = (data, dimCol, metricCol, n = 10, agg = 'sum') => {
   const result = aggregateByDimension(data, dimCol, [metricCol], agg);
   if (!result) return null;
@@ -656,6 +743,63 @@ export const exportToCSV = (data, filename = 'datos.csv') => {
   URL.revokeObjectURL(a.href);
 };
 
+
+const isFiniteNumericValue = (value) => {
+  if (value === null || value === undefined || value === '') return false;
+  const n = parseFloat(value);
+  return Number.isFinite(n);
+};
+
+const inferExportPivotConfig = (data, headers) => {
+  const numericColumns = headers.filter((header) => data.some((row) => isFiniteNumericValue(row[header])));
+  const dimensionColumns = headers.filter((header) => !numericColumns.includes(header));
+
+  const rowField = dimensionColumns[0] || headers[0];
+  const colField = dimensionColumns.find((header) => {
+    if (header === rowField) return false;
+    const uniqueValues = new Set(data.map((row) => row[header] ?? '(vacío)'));
+    return uniqueValues.size > 1 && uniqueValues.size <= 24;
+  });
+
+  return {
+    rowField,
+    colField,
+    valueField: numericColumns[0] || headers[0],
+    aggFn: numericColumns.length > 0 ? 'sum' : 'count',
+  };
+};
+
+const buildExportPivotSheet = (data, headers) => {
+  if (!data?.length || !headers?.length) return null;
+
+  const { rowField, colField, valueField, aggFn } = inferExportPivotConfig(data, headers);
+  const pivot = buildPivotTable(data, [rowField], colField, valueField, aggFn);
+  if (!pivot) return null;
+
+  const valueHeader = `${aggFn === 'count' ? 'Conteo' : 'Suma'} de ${valueField}`;
+  const pivotHeaders = colField
+    ? [rowField, ...pivot.colLabels, 'Total']
+    : [rowField, valueHeader];
+
+  const rows = pivot.rowLabels.map((rowLabel) => {
+    if (!colField) return [rowLabel, pivot.rowTotals[rowLabel]];
+    return [
+      rowLabel,
+      ...pivot.colLabels.map((colLabel) => pivot.matrix[rowLabel][colLabel]),
+      pivot.rowTotals[rowLabel],
+    ];
+  });
+
+  const totalsRow = colField
+    ? ['Total general', ...pivot.colLabels.map((colLabel) => pivot.colTotals[colLabel]), pivot.grandTotal]
+    : ['Total general', pivot.grandTotal];
+
+  const ws = XLSX.utils.aoa_to_sheet([pivotHeaders, ...rows, totalsRow]);
+  ws['!cols'] = pivotHeaders.map((header) => ({ wch: Math.min(String(header).length + 6, 40) }));
+  ws['!autofilter'] = { ref: XLSX.utils.encode_range({ s: { r: 0, c: 0 }, e: { r: rows.length + 1, c: pivotHeaders.length - 1 } }) };
+  return ws;
+};
+
 /**
  * Exporta datos filtrados a Excel (.xlsx) con formato básico.
  * Incluye metadatos de filtros aplicados en una hoja separada.
@@ -678,7 +822,8 @@ export const exportToExcel = (data, filename = 'datos.xlsx', filters = []) => {
   ws['!cols'] = colWidths;
 
   const wb = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, ws, 'Datos');
+  const pivotWs = buildExportPivotSheet(data, headers);
+  if (pivotWs) XLSX.utils.book_append_sheet(wb, pivotWs, 'Tabla Dinámica');
 
   // Add filters sheet if filters exist
   if (filters?.length > 0) {
