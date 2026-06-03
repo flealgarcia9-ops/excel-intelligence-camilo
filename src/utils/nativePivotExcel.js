@@ -52,6 +52,19 @@ export const inferNativePivotFields = (data, structure = {}) => {
   const yearField = structure?.dimensions?.year || findFirstHeader(headers, [/^año$/i, /^anio$/i, /year/i]);
   const monthField = structure?.dimensions?.month || findFirstHeader(headers, [/^mes$/i, /month/i]);
 
+  // Detectar estructura típica de actuaciones (año + mes + nombre de actuación)
+  // En este caso usar COUNT del nombre de actuación en vez de SUM de campo numérico
+  const hasActionYearMonth = actionField && yearField && monthField && /nombre.*actuaci[oó]n/i.test(actionField);
+  if (hasActionYearMonth) {
+    return {
+      headers,
+      rowFields: [yearField, actionField],
+      columnField: monthField,
+      valueField: actionField,
+      aggFn: 'count',
+    };
+  }
+
   const numericValueField = findFirstHeader(numericHeaders, [
     /n[uú]mero.*indicados?.*afectados?/i,
     /indicados?.*afectados?/i,
@@ -107,15 +120,9 @@ const buildVisiblePivotAoA = (data, fields) => {
   ];
 };
 
-const makeCacheFieldXml = (data, header, valueField) => {
+const makeCacheFieldXml = (data, header) => {
   const values = getUniqueValues(data, header);
   const numeric = values.length > 0 && values.every(isUsableNumber);
-  const isValueField = header === valueField;
-
-  if (isValueField && numeric) {
-    return `<cacheField name="${xmlEscape(header)}" numFmtId="0"><sharedItems containsSemiMixedTypes="0" containsString="0" containsNumber="1" containsInteger="1" count="0"/></cacheField>`;
-  }
-
   const items = values.map((value) => numeric
     ? `<n v="${xmlEscape(Number(String(value).replace(',', '.')))}"/>`
     : `<s v="${xmlEscape(value)}"/>`
@@ -128,22 +135,14 @@ const makeCacheFieldXml = (data, header, valueField) => {
   return `<cacheField name="${xmlEscape(header)}" numFmtId="0"><sharedItems${attrs}>${items}</sharedItems></cacheField>`;
 };
 
-const makeCacheRecordsXml = (data, headers, valueField) => {
+const makeCacheRecordsXml = (data, headers) => {
   const indexes = Object.fromEntries(headers.map((header) => [
     header,
     new Map(getUniqueValues(data, header).map((value, index) => [String(value), index])),
   ]));
-  const valueHeader = valueField;
 
   const rows = data.map((row) => {
-    const cells = headers.map((header) => {
-      const raw = row[header] ?? '(vacío)';
-      if (header === valueHeader && isUsableNumber(raw)) {
-        const num = Number(String(raw).replace(',', '.'));
-        return `<n v="${xmlEscape(Number.isFinite(num) ? num : 0)}"/>`;
-      }
-      return `<x v="${indexes[header].get(String(raw)) ?? 0}"/>`;
-    }).join('');
+    const cells = headers.map((header) => `<x v="${indexes[header].get(String(row[header] ?? '(vacío)')) ?? 0}"/>`).join('');
     return `<r>${cells}</r>`;
   }).join('');
 
@@ -211,9 +210,9 @@ const injectNativePivotParts = async (xlsxArray, data, fields) => {
   workbookRels = appendRelationship(workbookRels, 'rIdPivotCache1', 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/pivotCacheDefinition', 'pivotCache/pivotCacheDefinition1.xml');
   zip.file('xl/_rels/workbook.xml.rels', workbookRels);
 
-  const cacheFields = fields.headers.map((header) => makeCacheFieldXml(data, header, fields.valueField)).join('');
+  const cacheFields = fields.headers.map((header) => makeCacheFieldXml(data, header)).join('');
   zip.file('xl/pivotCache/pivotCacheDefinition1.xml', `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<pivotCacheDefinition xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" r:id="rId1" refreshOnLoad="1" recordCount="${data.length}" createdVersion="6"><cacheSource type="worksheet"><worksheetSource ref="${sourceRef}" sheet="Datos"/></cacheSource><cacheFields count="${fields.headers.length}">${cacheFields}</cacheFields></pivotCacheDefinition>`);
-  zip.file('xl/pivotCache/pivotCacheRecords1.xml', makeCacheRecordsXml(data, fields.headers, fields.valueField));
+  zip.file('xl/pivotCache/pivotCacheRecords1.xml', makeCacheRecordsXml(data, fields.headers));
   zip.file('xl/pivotCache/_rels/pivotCacheDefinition1.xml.rels', '<?xml version="1.0" encoding="UTF-8"?>\n<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/pivotCacheRecords" Target="pivotCacheRecords1.xml"/></Relationships>');
   zip.file('xl/pivotTables/pivotTable1.xml', makePivotTableXml(data, fields));
   zip.file('xl/pivotTables/_rels/pivotTable1.xml.rels', '<?xml version="1.0" encoding="UTF-8"?>\n<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/pivotCacheDefinition" Target="../pivotCache/pivotCacheDefinition1.xml"/></Relationships>');
@@ -237,12 +236,18 @@ export const createNativePivotWorkbook = async (data, structure = {}) => {
   if (!data?.length) return null;
 
   const fields = inferNativePivotFields(data, structure);
-  const pivotAoA = buildVisiblePivotAoA(data, fields);
-  const pivotWs = XLSX.utils.aoa_to_sheet(pivotAoA);
-  pivotWs['!cols'] = pivotAoA[3]?.map((header, index) => ({ wch: index === 0 ? 48 : Math.max(12, Math.min(String(header || '').length + 4, 18)) })) || [];
 
-  const sourceData = data.map((row) => Object.fromEntries(fields.headers.map((header) => [header, row[header] ?? ''])));
+  // Convertir valores numéricos-string a números reales para que XLSX los escriba como números
+  const sourceData = data.map((row) => Object.fromEntries(fields.headers.map((header) => {
+    const val = row[header];
+    if (val === null || val === undefined || val === '') return [header, ''];
+    const num = Number(String(val).replace(',', '.'));
+    return [header, Number.isFinite(num) ? num : val];
+  })));
   const sourceWs = XLSX.utils.json_to_sheet(sourceData, { header: fields.headers });
+
+  // Hoja de tabla dinámica: mínima, Excel la renderiza desde el XML nativo
+  const pivotWs = XLSX.utils.aoa_to_sheet([['Tabla dinámica']]);
 
   const wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, pivotWs, 'Tabla dinámica');
