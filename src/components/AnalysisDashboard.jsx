@@ -15,7 +15,7 @@ import {
   ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight,
   Maximize2, Minimize2, Activity, TrendingUp, TrendingDown, Minus,
   Grid3X3, Info, Sparkles, SlidersHorizontal, Trash2, Plus,
-  FileSpreadsheet, AlertCircle, Moon, Sun, Database, Terminal,
+  FileSpreadsheet, AlertCircle, Moon, Sun, Database, Terminal, LayoutGrid,
 } from 'lucide-react';
 import SmartOverview from './SmartOverview';
 import QueryView from './QueryView';
