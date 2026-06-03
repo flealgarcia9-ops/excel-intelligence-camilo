@@ -168,7 +168,11 @@ const makePivotTableXml = (data, fields) => {
     if (isRow) attrs += ' axis="axisRow"';
     if (isCol) attrs += ' axis="axisCol"';
     if (isValue) attrs += ' dataField="1"';
-    if ((isRow || isCol) && !isValue) attrs += ' defaultSubtotal="0"';
+    if ((isRow || isCol) && !isValue) {
+      // El primer campo de fila (año) muestra subtotales, los demás no
+      const isFirstRowField = isRow && index === rowIndexes[0];
+      attrs += isFirstRowField ? ' defaultSubtotal="1"' : ' defaultSubtotal="0"';
+    }
 
     if ((isRow || isCol) && !isValue) {
       return `<pivotField ${attrs}>${makeItemsXml(uniqueCount)}</pivotField>`;
