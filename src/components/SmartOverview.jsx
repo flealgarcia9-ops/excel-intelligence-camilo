@@ -1,14 +1,14 @@
 import React, { useMemo, useState, useRef } from 'react';
-import * as XLSX from 'xlsx';
 import {
   Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip,
   Legend, PointElement, LineElement, ArcElement, Filler,
 } from 'chart.js';
 import { Bar, Line, Doughnut } from 'react-chartjs-2';
 import {
-  analyzeSheetStructure, aggregateByDimension, buildPivotTable, getTopN, getColumnStats,
+  analyzeSheetStructure, aggregateByDimension, getTopN, getColumnStats,
   getUniqueValues,
 } from '../utils/excelParser';
+import { exportNativePivotExcel } from '../utils/nativePivotExcel';
 import {
   TrendingUp, TrendingDown, Minus, ArrowRight, Calendar,
   MapPin, Users, BarChart2, Download, Filter as FilterIcon, FileSpreadsheet, Activity,
@@ -20,99 +20,6 @@ ChartJS.register(
   ArcElement, Filler, Title, Tooltip, Legend,
 );
 
-
-const isUsableNumber = (value) => {
-  if (value === null || value === undefined || value === '') return false;
-  const n = Number(String(value).replace(',', '.'));
-  return Number.isFinite(n);
-};
-
-const findFirstHeader = (headers, patterns) => (
-  headers.find((header) => patterns.some((pattern) => pattern.test(String(header))))
-);
-
-const inferPivotExportFields = (data, structure) => {
-  const headers = structure?.headers || Object.keys(data?.[0] || {});
-  const numericHeaders = headers.filter((header) => data.some((row) => isUsableNumber(row[header])));
-  const textHeaders = headers.filter((header) => !numericHeaders.includes(header));
-
-  const rowField = findFirstHeader(headers, [
-    /actuaci[oó]n/i,
-    /decisi[oó]n/i,
-    /estado/i,
-    /tipo/i,
-    /categor/i,
-    /etapa/i,
-    /tr[aá]mite/i,
-  ]) || structure?.dimensions?.type || structure?.dimensions?.name || textHeaders[0] || headers[0];
-
-  const preferredColumnField = structure?.dimensions?.month || structure?.dimensions?.year || findFirstHeader(headers, [
-    /^mes$/i,
-    /month/i,
-    /año|anio|year/i,
-  ]);
-
-  const columnField = preferredColumnField && preferredColumnField !== rowField ? preferredColumnField : null;
-
-  const valueField = findFirstHeader(numericHeaders, [
-    /indicados?.*afectados?/i,
-    /afectados?/i,
-    /n[uú]mero/i,
-    /cantidad/i,
-    /total/i,
-    /entran/i,
-    /salen/i,
-    /carga/i,
-  ]) || numericHeaders[0] || headers.find((header) => header !== rowField && header !== columnField) || headers[0];
-
-  return {
-    rowField,
-    columnField,
-    valueField,
-    aggFn: numericHeaders.length ? 'sum' : 'count',
-  };
-};
-
-const buildPivotExportWorksheet = (data, structure) => {
-  if (!data?.length) return null;
-
-  const { rowField, columnField, valueField, aggFn } = inferPivotExportFields(data, structure);
-  const pivot = buildPivotTable(data, [rowField], columnField, valueField, aggFn);
-  if (!pivot) return null;
-
-  const valueLabel = `${aggFn === 'count' ? 'Conteo' : 'Suma'} de ${valueField}`;
-  const headerRow = columnField
-    ? [rowField, ...pivot.colLabels.map((label) => String(label)), 'Total general']
-    : [rowField, valueLabel];
-
-  const bodyRows = pivot.rowLabels.map((rowLabel) => {
-    if (!columnField) return [rowLabel, pivot.rowTotals[rowLabel]];
-    return [
-      rowLabel,
-      ...pivot.colLabels.map((colLabel) => pivot.matrix[rowLabel][colLabel] || 0),
-      pivot.rowTotals[rowLabel],
-    ];
-  });
-
-  const totalsRow = columnField
-    ? ['Total general', ...pivot.colLabels.map((colLabel) => pivot.colTotals[colLabel] || 0), pivot.grandTotal]
-    : ['Total general', pivot.grandTotal];
-
-  const ws = XLSX.utils.aoa_to_sheet([
-    [valueLabel, columnField ? `Columnas: ${columnField}` : ''],
-    headerRow,
-    ...bodyRows,
-    totalsRow,
-  ]);
-
-  const lastRow = bodyRows.length + 2;
-  const lastCol = headerRow.length - 1;
-  ws['!cols'] = headerRow.map((header, index) => ({ wch: index === 0 ? 42 : Math.max(12, Math.min(String(header).length + 4, 18)) }));
-  ws['!autofilter'] = { ref: XLSX.utils.encode_range({ s: { r: 1, c: 0 }, e: { r: lastRow, c: lastCol } }) };
-  ws['!freeze'] = { xSplit: 1, ySplit: 2 };
-
-  return ws;
-};
 
 /* ── Palette ─────────────────────────────────────── */
 const STAGE_COLORS = {
@@ -699,13 +606,8 @@ export default function SmartOverview({ sheetData, workbook }) {
   const isFiscalia = structure.hasGroups || structure.hasSimpleStages;
   const displayData = isFiscalia ? fiscaliaFilteredData : filteredData;
 
-  const handleExport = () => {
-    const ws = buildPivotExportWorksheet(displayData, structure);
-    if (!ws) return;
-
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Tabla Dinámica');
-    XLSX.writeFile(wb, `tabla_dinamica_${Date.now()}.xlsx`, { compression: true });
+  const handleExport = async () => {
+    await exportNativePivotExcel(displayData, `tabla_dinamica_${Date.now()}.xlsx`, structure);
   };
 
   const setFilter = (key, val) => {
